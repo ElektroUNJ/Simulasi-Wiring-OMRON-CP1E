@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"
     />
-    <title>PLC Wiring Simulator v41 - Visible Connections & Clean Wiring</title>
+    <title>PLC Wiring Simulator v43 - Skeuomorphic Industrial Panel</title>
     <!-- Font Industri & Teknikal -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -40,6 +40,12 @@
         -webkit-tap-highlight-color: transparent;
       }
 
+      html {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
       body {
         background: var(--bg-main);
         color: var(--text-main);
@@ -50,6 +56,8 @@
           sans-serif;
         display: flex;
         flex-direction: column;
+        width: 100%;
+        height: 100%;
         height: 100vh;
         height: 100dvh;
         overflow: hidden;
@@ -349,6 +357,9 @@
       /* CANVAS WORKBENCH VIEWPORT */
       #viewport-container {
         flex: 1;
+        width: 100%;
+        height: 100%;
+        min-height: 0;
         position: relative;
         background-color: #1a1c23;
         background-image: radial-gradient(
@@ -1539,39 +1550,1426 @@
       #viewport-container { cursor:grab; touch-action:none; overscroll-behavior:contain; }
       #viewport-container.panning { cursor:grabbing; }
 
-      /* v40: toolbar adaptif untuk layar kecil dan landscape ponsel */
-      #toolbar { min-width:0; max-width:100vw; gap:8px; }
+      /* v40/v43: toolbar adaptif untuk layar kecil dan landscape ponsel */
+      #toolbar { min-width:0; max-width:100vw; gap:8px; overflow:visible !important; }
       .tb-left,.tb-center,.tb-right { min-width:0; flex-shrink:0; }
-      @media (max-width: 760px) {
+      @media (max-width: 820px) {
         #toolbar {
-          height:auto !important; min-height:0; max-height:30dvh;
-          padding:6px 7px !important; display:grid !important;
+          height:auto !important; min-height:0;
+          padding:5px 8px !important; display:grid !important;
           grid-template-columns:minmax(0,1fr) auto; grid-template-areas:"brand menu" "tools tools";
-          align-items:center; gap:6px; overflow-x:hidden; overflow-y:auto;
+          align-items:center; gap:5px; overflow:visible !important;
         }
-        .tb-left { grid-area:brand; min-width:0; gap:5px !important; overflow:hidden; }
-        .tb-left .brand-badge { font-size:10px !important; padding:5px 7px !important; white-space:nowrap; }
-        #status-bar { font-size:9px !important; padding:4px 6px !important; letter-spacing:0 !important; white-space:normal; line-height:1.25; }
-        .tb-center { grid-area:tools; width:100%; display:flex; flex-wrap:nowrap; overflow-x:auto; overflow-y:hidden; gap:5px !important; padding:1px 0 3px; scrollbar-width:thin; -webkit-overflow-scrolling:touch; }
-        .tb-right { grid-area:menu; justify-self:end; }
-        .tb-center .btn { flex:0 0 auto; min-height:34px; height:34px; padding:6px 9px !important; font-size:11px !important; white-space:nowrap; }
-        .color-picker { flex:0 0 auto; }
-        .zoom-controls { flex:0 0 auto; min-height:34px; }
-        .zoom-btn { min-width:28px; min-height:28px; }
-        #zoom-label { width:44px !important; font-size:12px !important; }
-        .btn-more { min-width:36px; min-height:34px; }
+        .tb-left { grid-area:brand; min-width:0; gap:5px !important; overflow:hidden; display:flex; align-items:center; }
+        .tb-left .brand-badge { font-size:9.5px !important; padding:4px 7px !important; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:44vw; }
+        #status-bar { font-size:8.5px !important; padding:3px 6px !important; letter-spacing:0 !important; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0 !important; flex-shrink:1; }
+        .tb-center { grid-area:tools; width:100%; display:flex; flex-wrap:nowrap; overflow-x:auto; overflow-y:hidden; gap:5px !important; padding:2px 0 3px; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+        .tb-center::-webkit-scrollbar { display:none; }
+        .tb-right { grid-area:menu; justify-self:end; display:flex; align-items:center; gap:5px !important; position:relative; }
+        .tb-center .btn, .tb-right .btn { flex:0 0 auto; min-height:30px; height:30px; padding:4px 8px !important; font-size:10.5px !important; white-space:nowrap; }
+        #btn-theme-toggle { min-width:auto !important; padding:4px 8px !important; font-size:10px !important; }
+        .color-picker { flex:0 0 auto; height:30px; }
+        .zoom-controls { flex:0 0 auto; min-height:30px; height:30px; }
+        .zoom-btn { min-width:24px; min-height:24px; }
+        #zoom-label { width:40px !important; font-size:11px !important; }
+        .btn-more { min-width:32px; min-height:30px; padding:0 8px !important; }
+        .dropdown-menu {
+          position:fixed !important;
+          top:46px !important;
+          right:8px !important;
+          left:auto !important;
+          width:min(270px, calc(100vw - 16px)) !important;
+          max-height:calc(100dvh - 58px) !important;
+          z-index:9999 !important;
+        }
         #viewport-container { min-height:0; }
       }
-      @media (max-width: 760px) and (orientation: portrait) {
-        #toolbar { max-height:25dvh; }
-        .tb-left .brand-badge { max-width:46vw; overflow:hidden; text-overflow:ellipsis; }
-      }
-      @media (max-width: 950px) and (orientation: landscape) {
-        #toolbar { height:auto !important; min-height:44px; padding:4px 7px !important; gap:5px; }
-        .brand-badge { font-size:10px !important; }
-        .tb-left,.tb-center,.tb-right { gap:4px !important; }
-        .tb-center .btn { padding:5px 7px !important; }
+      @media (max-width: 960px) and (orientation: landscape) {
+        #toolbar {
+          height:40px !important; min-height:40px !important;
+          padding:0 6px !important; gap:4px !important;
+          display:flex !important; flex-wrap:nowrap !important;
+          align-items:center !important; justify-content:space-between !important;
+          overflow:visible !important;
+        }
+        .tb-left { flex:0 1 auto; min-width:0; gap:4px !important; overflow:hidden; }
+        .tb-left .brand-badge { font-size:9px !important; padding:3px 6px !important; white-space:nowrap; max-width:140px; overflow:hidden; text-overflow:ellipsis; }
+        #status-bar { font-size:8px !important; padding:3px 5px !important; min-width:0 !important; white-space:nowrap; }
+        .tb-center {
+          flex:1 1 auto; min-width:0; width:auto;
+          display:flex; flex-wrap:nowrap; overflow-x:auto; overflow-y:hidden;
+          gap:4px !important; padding:2px 2px; scrollbar-width:none; -webkit-overflow-scrolling:touch;
+        }
+        .tb-center::-webkit-scrollbar { display:none; }
+        .tb-right { flex:0 0 auto; gap:4px !important; display:flex; align-items:center; }
+        .tb-center .btn, .tb-right .btn { height:28px !important; min-height:28px !important; padding:3px 7px !important; font-size:10px !important; white-space:nowrap; flex:0 0 auto; }
+        #btn-theme-toggle { min-width:auto !important; padding:3px 7px !important; }
+        .color-picker { height:28px; padding:2px 5px; flex:0 0 auto; }
+        .color-dot { width:12px; height:12px; }
+        .zoom-controls { height:28px; min-height:28px; padding:1px 2px !important; flex:0 0 auto; }
+        .zoom-btn { width:22px; height:22px; min-width:22px; min-height:22px; font-size:12px; }
+        #zoom-label { width:38px !important; font-size:10px !important; padding:2px 1px !important; }
+        .btn-more { min-width:28px; height:28px !important; padding:0 6px !important; }
+        .dropdown-menu {
+          position:fixed !important;
+          top:42px !important;
+          right:6px !important;
+          width:min(260px, calc(100vw - 12px)) !important;
+          max-height:calc(100dvh - 48px) !important;
+          z-index:9999 !important;
+        }
         #viewport-container { min-height:0; }
+      }
+
+      /* ============================================================================
+         V43 — SKEUOMORPHIC REALISTIC INDUSTRIAL HARDWARE STYLING
+         (Omron CP1E-E20, Schneider Acti9/Domae MCBs, 12V Mesh PSU, Mitsubishi SN-21)
+         ============================================================================ */
+
+      /* 0. SEKRUP TERMINAL BERULIR PERAK REALISTIS (PLUS-MINUS / POZIDRIV INDUSTRIAL) */
+      .terminal {
+        width: 21px;
+        height: 21px;
+        border-radius: 50%;
+        background:
+          radial-gradient(circle at 32% 28%, #ffffff 0%, #e2e8f0 32%, #94a3b8 68%, #475569 100%) !important;
+        border: 1.5px solid #334155 !important;
+        box-shadow:
+          inset 0 1px 1.5px rgba(255, 255, 255, 0.9),
+          inset 0 -1px 2px rgba(15, 23, 42, 0.55),
+          0 2px 3px rgba(15, 23, 42, 0.38) !important;
+        position: relative;
+      }
+      .terminal::after {
+        content: "";
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background:
+          linear-gradient(0deg, transparent 41%, #1e293b 43%, #0f172a 57%, transparent 59%),
+          linear-gradient(90deg, transparent 42%, #334155 44%, #1e293b 56%, transparent 58%) !important;
+        box-shadow: inset 0 0 1.5px rgba(0, 0, 0, 0.65);
+        pointer-events: none;
+      }
+
+      /* 1. OMRON SYSMAC CP1E-E20 (PLC) */
+      #plc.cp1e-unit {
+        left: 330px;
+        top: 78px;
+        width: 430px;
+        height: 540px;
+        padding: 8px 10px 10px !important;
+        background:
+          radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.05) 0%, transparent 45%),
+          repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 3px),
+          linear-gradient(160deg, #2b3036 0%, #1c2025 48%, #14171b 100%) !important;
+        border: 2px solid #3f4752 !important;
+        border-radius: 8px !important;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.16),
+          inset 0 -3px 8px rgba(0, 0, 0, 0.75),
+          0 10px 24px rgba(15, 23, 42, 0.35) !important;
+        color: #e2e8f0 !important;
+      }
+      #plc.cp1e-unit .comp-header {
+        background: linear-gradient(180deg, #272d34 0%, #181c21 100%) !important;
+        color: #f8fafc !important;
+        border: 1px solid #3c444f !important;
+        border-radius: 5px !important;
+        font-size: 9.5px !important;
+        letter-spacing: 0.7px;
+        padding: 3px 8px !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+      }
+      /* Cover Penutup Terminal Transparan/Semi-Gelap Bertingkat (Two-Tier Terminal Block) */
+      #plc.cp1e-unit .terminal-rack {
+        background:
+          linear-gradient(180deg, rgba(26, 31, 37, 0.92) 0%, rgba(15, 18, 22, 0.96) 100%) !important;
+        border: 1.5px solid #454f5b !important;
+        border-radius: 6px !important;
+        padding: 5px 6px 7px !important;
+        position: relative;
+        box-shadow:
+          inset 0 2px 6px rgba(0, 0, 0, 0.78),
+          inset 0 1px 0 rgba(255, 255, 255, 0.12),
+          0 2px 4px rgba(0, 0, 0, 0.4) !important;
+      }
+      /* Efek Mika/Akrilik Semi-Gelap Berlekuk di Atas & Bawah */
+      #plc.cp1e-unit .terminal-rack::before {
+        content: "";
+        position: absolute;
+        inset: 1px;
+        border-radius: 5px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.01) 35%, rgba(0, 0, 0, 0.25) 100%);
+        pointer-events: none;
+      }
+      .cp1e-cover-lip,
+      #plc.cp1e-unit .output-section-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: linear-gradient(90deg, #111418 0%, #1e242b 50%, #111418 100%) !important;
+        color: #cbd5e1 !important;
+        border: 1px solid #38414c !important;
+        border-radius: 3px;
+        padding: 2px 8px;
+        font-family: "Fira Code", monospace;
+        font-size: 7.5px;
+        font-weight: 700;
+        letter-spacing: 0.4px;
+        margin-bottom: 3px;
+      }
+      #plc.cp1e-unit .output-section-title {
+        justify-content: center;
+        color: #f8fafc !important;
+      }
+      #plc.cp1e-unit .terminal-tier {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 3px 5px;
+        border-radius: 4px;
+        position: relative;
+        z-index: 2;
+      }
+      #plc.cp1e-unit .terminal-tier.tier-upper {
+        background: linear-gradient(180deg, #252b33 0%, #191d23 100%);
+        border: 1px solid #3c4450;
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        margin-bottom: 3px;
+      }
+      #plc.cp1e-unit .terminal-tier.tier-lower {
+        background: linear-gradient(180deg, #171b20 0%, #0e1115 100%);
+        border: 1px solid #2d343e;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.7);
+        padding-left: 14px; /* Offset visual khas blok terminal bertingkat CP1E */
+      }
+      #plc.cp1e-unit .plc-term-wrap {
+        width: 38px;
+        padding: 1px 2px;
+        border-right: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      #plc.cp1e-unit .plc-term-wrap:last-child {
+        border-right: none;
+      }
+      #plc.cp1e-unit .plc-term-wrap.relay-grp-sep {
+        border-right: 1.5px dashed rgba(251, 191, 36, 0.45);
+      }
+      #plc.cp1e-unit .plc-term-wrap .term-label {
+        color: #f1f5f9 !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9) !important;
+        font-size: 8px !important;
+        font-weight: 700 !important;
+        background: rgba(0, 0, 0, 0.35);
+        padding: 0 3px;
+        border-radius: 2px;
+        margin-bottom: 2px;
+      }
+
+      /* Panel Indikator Tengah CP1E */
+      #plc.cp1e-unit .plc-mid.cp1e-faceplate {
+        background:
+          linear-gradient(180deg, #23282f 0%, #1b1f25 55%, #21262d 100%) !important;
+        border: 1.5px solid #434c58 !important;
+        border-radius: 6px !important;
+        padding: 9px 10px !important;
+        gap: 8px;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.1),
+          0 3px 8px rgba(0, 0, 0, 0.5) !important;
+      }
+      .cp1e-face-top {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 92px 1fr 112px;
+        align-items: center;
+        gap: 8px;
+      }
+      /* Port Komunikasi USB Tipe-B dengan Penutup Karet Khas CP1E */
+      .cp1e-usb-bay {
+        background: linear-gradient(145deg, #16191e 0%, #0e1014 100%);
+        border: 1.5px solid #38404a;
+        border-radius: 5px;
+        padding: 5px 6px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8);
+        position: relative;
+      }
+      .cp1e-rubber-cap {
+        width: 100%;
+        background: linear-gradient(180deg, #2d333b 0%, #1f242a 100%);
+        border: 1px solid #4b5563;
+        border-radius: 3px;
+        padding: 1px 4px;
+        text-align: center;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+      }
+      .usb-icon-sym {
+        font-family: "Fira Code", monospace;
+        font-size: 7px;
+        font-weight: 700;
+        color: #cbd5e1 !important;
+      }
+      .cp1e-usb-socket {
+        width: 34px;
+        height: 26px;
+        background: #090b0e;
+        border: 1px solid #475569;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.95);
+      }
+      /* Bentuk Beveled Khas Konektor USB Type-B */
+      .usb-b-shell {
+        width: 20px;
+        height: 17px;
+        background: linear-gradient(135deg, #cbd5e1 0%, #64748b 100%);
+        clip-path: polygon(22% 0%, 78% 0%, 100% 28%, 100% 100%, 0% 100%, 0% 28%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2px;
+      }
+      .usb-b-pin-core {
+        width: 10px;
+        height: 8px;
+        background: #1e293b;
+        border: 1.5px solid #f59e0b;
+        border-radius: 1px;
+      }
+      .cp1e-port-label {
+        font-family: "Fira Code", monospace;
+        font-size: 6.5px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        color: #94a3b8 !important;
+      }
+
+      /* Label Putih OMRON & SYSMAC CP1E */
+      .cp1e-brand-center {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding-left: 6px;
+        border-left: 2px solid #0284c7;
+      }
+      .omron-logo-text {
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        font-weight: 900;
+        letter-spacing: 2.2px;
+        color: #ffffff !important;
+        line-height: 1.05;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+      }
+      .sysmac-model-text {
+        font-family: "Fira Code", monospace;
+        font-size: 10px;
+        font-weight: 700;
+        color: #e2e8f0 !important;
+        letter-spacing: 0.6px;
+        margin-top: 2px;
+      }
+      .sysmac-model-text span {
+        color: #38bdf8 !important;
+        font-weight: 800;
+      }
+      .cp1e-submodel-badge {
+        margin-top: 3px;
+        background: #0f1318;
+        border: 1px solid #3b4450;
+        color: #94a3b8 !important;
+        font-family: "Fira Code", monospace;
+        font-size: 7.5px;
+        font-weight: 600;
+        padding: 1px 5px;
+        border-radius: 3px;
+      }
+
+      /* Window LED Status: PWR, RUN, ERR/ALM, INH, PRPHL */
+      .cp1e-status-window {
+        background: #0c0f13;
+        border: 1.5px solid #363e49;
+        border-radius: 5px;
+        padding: 5px 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.9);
+      }
+      .status-led-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .status-led-row .led {
+        margin: 0 !important;
+        width: 10px;
+        height: 5px;
+        border-radius: 1.5px;
+        background: #252b34;
+        border: 1px solid #3f4854 !important;
+        flex-shrink: 0;
+      }
+      .status-led-row .status-lbl {
+        font-family: "Fira Code", monospace;
+        font-size: 7.5px;
+        font-weight: 700;
+        color: #cbd5e1 !important;
+        letter-spacing: 0.3px;
+      }
+      #led-pwr.active-pwr,
+      #led-run.active-pwr {
+        background: #22c55e !important;
+        border-color: #86efac !important;
+        box-shadow: 0 0 8px #22c55e !important;
+      }
+      #led-err.active-err {
+        background: #ef4444 !important;
+        border-color: #fca5a5 !important;
+        box-shadow: 0 0 8px #ef4444 !important;
+      }
+      #led-inh.active-inh,
+      #led-prphl.active-in {
+        background: #f59e0b !important;
+        border-color: #fde047 !important;
+        box-shadow: 0 0 7px #f59e0b !important;
+      }
+
+      /* Grid LED Input (00-11) & Output (00-07) — Warna Amber/Oranye Menyala */
+      .cp1e-io-windows {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .cp1e-io-block {
+        background: #0c0e12;
+        border: 1.5px solid #353d48;
+        border-radius: 5px;
+        padding: 4px 7px 6px;
+        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.9);
+      }
+      .io-block-header {
+        display: flex;
+        justify-content: space-between;
+        font-family: "Fira Code", monospace;
+        font-size: 7.5px;
+        font-weight: 800;
+        color: #fbbf24 !important;
+        border-bottom: 1px solid #262c35;
+        padding-bottom: 2px;
+        margin-bottom: 4px;
+      }
+      .io-block-header.out-hdr {
+        color: #fb923c !important;
+      }
+      #plc.cp1e-unit .plc-led-panel.cp1e-in-grid {
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 3px;
+      }
+      #plc.cp1e-unit .plc-led-panel.cp1e-out-grid {
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        gap: 4px;
+      }
+      .io-cell {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: #151920;
+        border: 1px solid #28303b;
+        border-radius: 3px;
+        padding: 2px 1px;
+      }
+      .io-cell .led {
+        width: 9px;
+        height: 5px;
+        border-radius: 1.5px;
+        background: #272d37;
+        border: 1px solid #3d4654 !important;
+        margin: 0 auto 2px;
+      }
+      .io-cell span {
+        font-family: "Fira Code", monospace;
+        font-size: 7.5px;
+        font-weight: 700;
+        color: #cbd5e1 !important;
+      }
+      /* Semua LED Input (00-11) & Output (00-07) Menyala Amber/Oranye Khas Omron CP1E */
+      #plc.cp1e-unit .led.active-in,
+      #plc.cp1e-unit .led.active-out,
+      #plc.cp1e-unit .led.active-out-red {
+        background: #ff9f0a !important;
+        border-color: #fde047 !important;
+        box-shadow: 0 0 8px #ff9f0a, 0 0 3px #fef08a !important;
+      }
+
+      /* 2 & 3. MCB 1-PHASE (4A) & MCB 3-PHASE (10A): SCHNEIDER ELECTRIC ACTI9 / DOMAE */
+      .schneider-mcb {
+        background:
+          linear-gradient(180deg, #fbfaf6 0%, #f3f0e6 22%, #ebe6d8 78%, #ded8c8 100%) !important;
+        border: 1.5px solid #9a9486 !important;
+        border-radius: 6px !important;
+        box-shadow:
+          inset 0 1px 0 #ffffff,
+          inset -2px 0 3px rgba(120, 113, 98, 0.22),
+          0 5px 12px rgba(15, 23, 42, 0.2) !important;
+        position: absolute;
+        overflow: visible;
+      }
+      #mcb.mcb-1p,
+      #mcb-neutral.mcb-1p {
+        width: 84px;
+        height: 186px;
+        padding: 3px 4px 4px !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      #mcb-3phase.mcb-3p {
+        width: 192px;
+        height: 186px;
+        padding: 3px 6px 4px !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      #mcb.mcb-1p .comp-header,
+      #mcb-neutral.mcb-1p .comp-header,
+      #mcb-3phase.mcb-3p .comp-header {
+        font-size: 8.5px !important;
+        padding: 2px 4px !important;
+        line-height: 1.15 !important;
+        white-space: nowrap;
+        width: 100%;
+      }
+      /* Lekukan Klip DIN-Rail Khas Modular MCB */
+      .mcb-din-clip {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 28px;
+        height: 4px;
+        background: #475569;
+        border: 1px solid #1e293b;
+        border-radius: 2px;
+        pointer-events: none;
+      }
+      .mcb-din-clip.top { top: -3px; }
+      .mcb-din-clip.bottom { bottom: -3px; }
+
+      .mcb-pole-dividers {
+        position: absolute;
+        top: 22px;
+        bottom: 6px;
+        left: 0;
+        right: 0;
+        pointer-events: none;
+        display: flex;
+        justify-content: space-evenly;
+      }
+      .mcb-pole-dividers span {
+        width: 1.5px;
+        height: 100%;
+        background: linear-gradient(180deg, rgba(120,113,98,0.45), rgba(255,255,255,0.6), rgba(120,113,98,0.45));
+      }
+
+      /* Lubang Sekrup Terminal Berbentuk Kotak Berkedalaman (Deep Terminal Pocket) */
+      .mcb-pocket-row {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        z-index: 2;
+      }
+      .mcb-pocket-row.three-pole {
+        justify-content: space-around;
+      }
+      .mcb-pocket {
+        background: linear-gradient(180deg, #b8b2a4 0%, #d6d0c2 50%, #a8a293 100%);
+        border: 1.5px solid #787162;
+        border-radius: 4px;
+        padding: 1.5px 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1px;
+        box-shadow:
+          inset 0 3px 5px rgba(15, 23, 42, 0.48),
+          0 1px 0 rgba(255, 255, 255, 0.85);
+      }
+      .mcb-1p .mcb-pocket .terminal {
+        width: 19px;
+        height: 19px;
+      }
+      .mcb-term-num {
+        font-family: "Fira Code", monospace;
+        font-size: 7px;
+        font-weight: 800;
+        color: #292524 !important;
+        line-height: 1;
+      }
+
+      /* Faceplate & Sablon Schneider Electric */
+      .mcb-faceplate {
+        width: 100%;
+        background: linear-gradient(180deg, #faf9f5 0%, #f0ece1 100%);
+        border: 1px solid #c7c0b0;
+        border-radius: 4px;
+        padding: 2px 4px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5px;
+        position: relative;
+        z-index: 2;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+      }
+      .mcb-brand-row,
+      .mcb-brand-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        line-height: 1;
+      }
+      .schneider-brand {
+        font-family: "Inter", sans-serif;
+        font-size: 8px;
+        font-weight: 900;
+        color: #009530 !important;
+        letter-spacing: -0.2px;
+      }
+      .schneider-sub {
+        display: inline;
+        font-size: 6px;
+        font-weight: 700;
+        color: #15803d !important;
+        letter-spacing: 0.1px;
+      }
+      .mcb-acti9-tag {
+        font-family: "Inter", sans-serif;
+        font-size: 7px;
+        font-weight: 700;
+        color: #334155 !important;
+        margin-top: 1px;
+      }
+      .mcb-acti9-tag b { color: #ea580c !important; }
+      .mcb-model-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0 2px;
+        font-family: "Fira Code", monospace;
+      }
+      .mcb-series {
+        font-size: 6.5px;
+        font-weight: 700;
+        color: #ea580c !important;
+      }
+      .mcb-curve {
+        font-size: 9px;
+        font-weight: 900;
+        color: #1e293b !important;
+      }
+      .mcb-curve-lg {
+        font-family: "Fira Code", monospace;
+        font-size: 10px;
+        font-weight: 900;
+        color: #0f172a !important;
+      }
+      .mcb-rating-box {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        font-family: "Fira Code", monospace;
+        font-size: 6.5px;
+        font-weight: 700;
+        color: #475569 !important;
+      }
+      .mcb-ka {
+        border: 1px solid #475569;
+        padding: 0 2px;
+        border-radius: 1.5px;
+        font-weight: 800;
+        color: #1e293b !important;
+      }
+      .mcb-class {
+        border: 1px solid #475569;
+        padding: 0 2px;
+        font-weight: 800;
+      }
+
+      /* Indikator VisiTrip / VisiSafe */
+      .visitrip-wrap,
+      .visitrip-row-3p {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 1px 3px;
+        background: #e5e0d3;
+        border-radius: 2px;
+        border: 1px solid #c4bdb0;
+      }
+      .visitrip-label {
+        font-family: "Fira Code", monospace;
+        font-size: 6px;
+        font-weight: 700;
+        color: #475569 !important;
+      }
+      .visitrip-windows-3p {
+        display: flex;
+        gap: 18px;
+      }
+      .visitrip-window {
+        width: 12px;
+        height: 5px;
+        background: #16a34a; /* Hijau VisiSafe saat normal */
+        border: 1px solid #1e293b;
+        border-radius: 1px;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.45);
+        transition: background 0.15s ease, box-shadow 0.15s ease;
+      }
+      /* Saat Trip atau Korsleting: Indikator VisiTrip berubah Merah Menyala */
+      #mcb.tripped .visitrip-window,
+      .schneider-mcb.tripped .visitrip-window {
+        background: #dc2626 !important;
+        box-shadow: 0 0 6px #ef4444, inset 0 0 2px #fca5a5 !important;
+      }
+
+      /* Tuas Sakelar Oranye Terang Khas Schneider (1P & 3P Gandeng) */
+      .mcb-toggle-well {
+        width: 100%;
+        background: linear-gradient(180deg, #27272a 0%, #3f3f46 50%, #18181b 100%);
+        border: 1px solid #52525b;
+        border-radius: 4px;
+        padding: 3px;
+        display: flex;
+        justify-content: center;
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.75);
+      }
+      .schneider-mcb .mcb-switch {
+        width: 48px;
+        height: 24px;
+        background: linear-gradient(180deg, #ff7900 0%, #ea580c 60%, #c2410c 100%) !important;
+        border: 1.5px solid #7c2d12 !important;
+        border-radius: 3px !important;
+        color: #ffffff !important;
+        font-family: "Fira Code", monospace;
+        font-size: 8.5px !important;
+        font-weight: 800 !important;
+        letter-spacing: 0.4px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        box-shadow:
+          inset 0 1.5px 1px rgba(255, 255, 255, 0.55),
+          0 2px 3px rgba(0, 0, 0, 0.5) !important;
+        transform: translateY(-1px);
+        transition: transform 0.12s ease, background 0.12s ease;
+      }
+      .schneider-mcb .mcb-switch::before {
+        content: "I · ON";
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 7.5px;
+        font-weight: 900;
+        color: #ffffff;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.55);
+        pointer-events: none;
+      }
+      /* Sembunyikan teks mentah di dalam elemen agar kompatibel dengan JS textContent === "ON" */
+      .schneider-mcb .mcb-switch {
+        font-size: 0 !important;
+      }
+      .schneider-mcb .mcb-switch.off {
+        background: linear-gradient(180deg, #f97316 0%, #c2410c 45%, #7c2d12 100%) !important;
+        border-color: #431407 !important;
+        transform: translateY(2px);
+      }
+      .schneider-mcb .mcb-switch.off::before {
+        content: "O · OFF";
+        color: #dcfce7;
+        background: rgba(22, 101, 52, 0.82);
+        border-radius: 2px;
+      }
+      .schneider-mcb .mcb-switch.tripped-lever {
+        background: linear-gradient(180deg, #ef4444 0%, #b91c1c 100%) !important;
+        border-color: #7f1d1d !important;
+        transform: translateY(0px);
+      }
+      .schneider-mcb .mcb-switch.tripped-lever::before {
+        content: "⚠ TRIP";
+        color: #ffffff;
+      }
+      /* Tuas Gandeng 3-Pole Lebar dengan Garis Sekat Mekanis */
+      .schneider-mcb .mcb-switch.mcb-switch-ganged {
+        width: 152px !important;
+        height: 24px !important;
+        background:
+          linear-gradient(90deg,
+            transparent 32%, rgba(124, 45, 18, 0.65) 32.5%, rgba(255, 255, 255, 0.35) 33.5%, transparent 34%,
+            transparent 65%, rgba(124, 45, 18, 0.65) 65.5%, rgba(255, 255, 255, 0.35) 66.5%, transparent 67%),
+          linear-gradient(180deg, #ff7900 0%, #ea580c 60%, #c2410c 100%) !important;
+      }
+      .schneider-mcb .mcb-switch.mcb-switch-ganged::before {
+        content: "I · ON      I · ON      I · ON";
+        letter-spacing: 0.2px;
+      }
+      .schneider-mcb .mcb-switch.mcb-switch-ganged.off::before {
+        content: "O · OFF     O · OFF     O · OFF";
+      }
+
+      .mcb-3p-top-meta {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 4px;
+      }
+      .mcb-3p-specs {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .mcb-symbol-svg {
+        width: 28px;
+        height: 13px;
+      }
+      .mcb-symbol-3p {
+        width: 52px;
+        height: 20px;
+      }
+
+      /* 4. POWER SUPPLY UNIT (PSU): 12V DC PERFORATED METAL MESH ENCLOSURE */
+      #psu.psu-metal-comp {
+        left: 115px;
+        top: 78px;
+        width: 202px;
+        height: 186px;
+        padding: 5px 6px 6px !important;
+        background:
+          linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 35%, #94a3b8 70%, #cbd5e1 100%) !important;
+        border: 1.5px solid #64748b !important;
+        border-radius: 6px !important;
+        box-shadow:
+          inset 0 1px 0 #ffffff,
+          inset 0 -2px 4px rgba(15, 23, 42, 0.25),
+          0 5px 14px rgba(15, 23, 42, 0.22) !important;
+      }
+      #psu.psu-metal-comp .comp-header {
+        background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%) !important;
+        color: #0f172a !important;
+        border: 1px solid #64748b !important;
+        font-size: 9px !important;
+        padding: 3px 6px !important;
+      }
+      .psu-chassis {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: calc(100% - 24px);
+        gap: 4px;
+      }
+      /* Pelat Aluminium Perforasi (Honeycomb / Perforated Mesh) */
+      .psu-mesh-area {
+        position: relative;
+        height: 68px;
+        border-radius: 4px;
+        border: 1.5px solid #475569;
+        background:
+          radial-gradient(circle at 25% 45%, rgba(217, 119, 6, 0.22) 0%, transparent 45%),
+          radial-gradient(circle, #0f172a 1.8px, transparent 2.1px) 0 0 / 7px 7px,
+          radial-gradient(circle, #0f172a 1.8px, transparent 2.1px) 3.5px 3.5px / 7px 7px,
+          linear-gradient(160deg, #94a3b8 0%, #cbd5e1 45%, #64748b 100%) !important;
+        box-shadow: inset 0 2px 6px rgba(15, 23, 42, 0.55);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px;
+        overflow: hidden;
+      }
+      #psu.psu-metal-comp .psu-plate {
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.92) 0%, rgba(30, 41, 59, 0.95) 100%) !important;
+        border: 1px solid #94a3b8 !important;
+        border-radius: 4px;
+        padding: 4px 8px;
+        text-align: center;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+        z-index: 2;
+      }
+      .psu-plate-brand {
+        font-family: "Fira Code", monospace;
+        font-size: 6.5px;
+        font-weight: 700;
+        color: #cbd5e1 !important;
+        letter-spacing: 0.6px;
+      }
+      .psu-plate-main {
+        font-family: "Fira Code", monospace;
+        font-size: 9px;
+        font-weight: 900;
+        color: #fde047 !important;
+        letter-spacing: 0.3px;
+        margin: 1px 0;
+      }
+      .psu-plate-sub {
+        font-family: "Fira Code", monospace;
+        font-size: 6px;
+        color: #94a3b8 !important;
+      }
+
+      /* Baris Trimmer V.ADJ & Indikator LED Hijau DC OK */
+      .psu-trimmer-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: linear-gradient(180deg, #cbd5e1 0%, #b0bccb 100%);
+        border: 1px solid #64748b;
+        border-radius: 3px;
+        padding: 2px 7px;
+      }
+      .psu-Model-tag {
+        font-family: "Fira Code", monospace;
+        font-size: 7.5px;
+        font-weight: 800;
+        color: #1e293b !important;
+      }
+      .psu-adj-group,
+      .psu-led-group {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .psu-vadj-pot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 35%, #fde047 0%, #ca8a04 75%, #854d0e 100%);
+        border: 1.5px solid #475569;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6);
+      }
+      .psu-vadj-slot {
+        width: 7px;
+        height: 1.5px;
+        background: #422006;
+        transform: rotate(-35deg);
+      }
+      .psu-dc-ok-led {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #16a34a;
+        border: 1px solid #14532d;
+        box-shadow: 0 0 6px #22c55e, inset 0 1px 1px #bbf7d0;
+      }
+      .psu-dc-ok-led.off {
+        background: #334155 !important;
+        box-shadow: none !important;
+      }
+      .psu-adj-label {
+        font-family: "Fira Code", monospace;
+        font-size: 7px;
+        font-weight: 800;
+        color: #0f172a !important;
+      }
+
+      /* Blok Terminal Akrilik Bening 7 Titik Baut (L, N, FG, -V, -V, +V, +V) */
+      #psu.psu-metal-comp .psu-terminal-block {
+        position: relative;
+        background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+        border: 1.5px solid #475569 !important;
+        border-radius: 4px;
+        padding: 3px 3px 4px !important;
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+      }
+      .psu-acrylic-guard {
+        position: absolute;
+        left: 2px;
+        right: 2px;
+        bottom: 2px;
+        height: 24px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.28) 0%, rgba(226, 232, 240, 0.08) 55%, rgba(255, 255, 255, 0.22) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.45);
+        border-radius: 3px;
+        pointer-events: none;
+        z-index: 4;
+      }
+      .psu-term-cell {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1px;
+        position: relative;
+        z-index: 3;
+      }
+      .psu-term-cell .term-label {
+        background: #f8fafc;
+        width: 100%;
+        text-align: center;
+        border-radius: 1.5px;
+        font-size: 7px !important;
+        font-weight: 900 !important;
+        line-height: 1.15;
+        padding: 0 1px;
+      }
+      .psu-barrier {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 1px 0;
+        border-right: 1.5px solid #475569;
+      }
+      .psu-term-cell:last-child .psu-barrier {
+        border-right: none;
+      }
+      #psu.psu-metal-comp .terminal {
+        width: 19px;
+        height: 19px;
+      }
+
+      /* 5. KONTAKTOR MAGNETIK: MITSUBISHI ELECTRIC SN-21 (INDUSTRIAL BEIGE) */
+      #contactor-k1.sn21-contactor,
+      #contactor-k2.sn21-contactor {
+        width: 144px;
+        height: 270px;
+        padding: 5px 6px !important;
+        background:
+          linear-gradient(155deg, #f2efe6 0%, #e4dfd1 48%, #d4cebe 100%) !important;
+        border: 1.5px solid #8c8574 !important;
+        border-radius: 6px !important;
+        box-shadow:
+          inset 0 1px 0 #ffffff,
+          inset -2px -2px 5px rgba(92, 86, 72, 0.25),
+          0 5px 12px rgba(15, 23, 42, 0.22) !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      #contactor-k1.sn21-contactor .comp-header,
+      #contactor-k2.sn21-contactor .comp-header {
+        background: linear-gradient(180deg, #e6e1d3 0%, #cfc8b6 100%) !important;
+        color: #1c1917 !important;
+        border-bottom: 1px solid #9c9482 !important;
+        font-size: 9px !important;
+        padding: 3px 5px !important;
+      }
+
+      /* Baris Koil A1 (Atas-Kanan) & A2 (Bawah-Kanan) */
+      .sn21-coil-top-bar,
+      .sn21-coil-bottom-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: linear-gradient(180deg, #dad4c4 0%, #c8c1af 100%);
+        border: 1px solid #968e7c;
+        border-radius: 4px;
+        padding: 2px 6px;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+      }
+      .sn21-coil-spec,
+      .sn21-aux-caption {
+        font-family: "Fira Code", monospace;
+        font-size: 6.8px;
+        font-weight: 800;
+        color: #292524 !important;
+      }
+      .sn21-coil-term {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      /* Penataan Terminal Utama (1/L1, 3/L2, 5/L3 & 2/T1, 4/T2, 6/T3) + Aux (13-14 NO, 21-22 NC) */
+      .sn21-term-tier {
+        display: grid;
+        grid-template-columns: 3fr 2fr;
+        gap: 3px;
+        background: linear-gradient(180deg, #cfc9b8 0%, #bdb5a2 100%);
+        border: 1px solid #8a8270;
+        border-radius: 4px;
+        padding: 3px 3px;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.22);
+      }
+      .sn21-main-group {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2px;
+        border-right: 1.5px solid #787162;
+        padding-right: 2px;
+      }
+      .sn21-aux-group {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2px;
+      }
+      .sn21-slot {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.25);
+        border: 1px solid rgba(120, 113, 98, 0.45);
+        border-radius: 3px;
+        padding: 1px 0;
+      }
+      .sn21-slot.aux-slot {
+        background: rgba(224, 242, 254, 0.32);
+      }
+      .sn21-slot .term-label {
+        font-size: 6.8px !important;
+        font-weight: 900 !important;
+        color: #1c1917 !important;
+        line-height: 1.05;
+        margin: 0 !important;
+      }
+      .sn21-slot .term-label small {
+        display: block;
+        font-size: 5.5px;
+        color: #0369a1 !important;
+      }
+      .sn21-contactor .terminal {
+        width: 19px;
+        height: 19px;
+      }
+
+      /* Bodi Tengah: Plat Nama Mitsubishi SN-21 & Jendela Inti Plunger Mekanis */
+      .sn21-center-bridge {
+        background: linear-gradient(180deg, #fbf9f3 0%, #ebe6d8 100%);
+        border: 1.5px solid #968e7c;
+        border-radius: 5px;
+        padding: 4px 6px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.14), inset 0 1px 0 #ffffff;
+      }
+      .sn21-nameplate {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #d1cbbd;
+        padding-bottom: 2px;
+      }
+      .mitsubishi-brand {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+      }
+      .mitsubishi-diamonds {
+        width: 12px;
+        height: 10px;
+        flex-shrink: 0;
+      }
+      .mitsubishi-text {
+        font-family: "Inter", sans-serif;
+        font-size: 7.5px;
+        font-weight: 900;
+        letter-spacing: 0.3px;
+        color: #111827 !important;
+      }
+      .sn21-model-badge {
+        font-family: "Fira Code", monospace;
+        font-size: 8.5px;
+        font-weight: 900;
+        color: #0f172a !important;
+        background: #e2dccb;
+        padding: 0 4px;
+        border-radius: 2px;
+        border: 1px solid #a8a08e;
+      }
+      #contactor-k1.sn21-contactor .plunger-window,
+      #contactor-k2.sn21-contactor .plunger-window {
+        background: linear-gradient(180deg, #27272a 0%, #18181b 100%) !important;
+        border: 1.5px solid #787162 !important;
+        border-radius: 4px;
+        height: 36px;
+        padding: 3px 6px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0;
+        box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.8) !important;
+      }
+      .plunger-recess {
+        width: 34px;
+        height: 24px;
+        background: #09090b;
+        border: 1px solid #52525b;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.95);
+      }
+      /* Inti Plunger Mekanis (Biru Tua / Oranye Gelap yang Tenggelam saat Energized) */
+      #contactor-k1.sn21-contactor .plunger,
+      #contactor-k2.sn21-contactor .plunger {
+        width: 24px;
+        height: 15px;
+        background: linear-gradient(180deg, #c2410c 0%, #9a3412 100%) !important;
+        border: 1px solid #fdba74 !important;
+        border-radius: 2px;
+        box-shadow: 0 2px 3px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        transform: scale(1) translateY(0);
+        transition: all 0.14s ease;
+      }
+      #contactor-k1.sn21-contactor .plunger.engaged,
+      #contactor-k2.sn21-contactor .plunger.engaged {
+        background: linear-gradient(180deg, #1d4ed8 0%, #1e3a8a 100%) !important;
+        border-color: #93c5fd !important;
+        transform: scale(0.86) translateY(2px) !important;
+        box-shadow:
+          inset 0 3px 5px rgba(0, 0, 0, 0.85),
+          0 0 8px rgba(59, 130, 246, 0.75) !important;
+      }
+      .sn21-ratings-col {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        line-height: 1.2;
+      }
+      .sn21-ac3-rating {
+        font-family: "Fira Code", monospace;
+        font-size: 6.8px;
+        font-weight: 800;
+        color: #f8fafc !important;
+      }
+      .sn21-ith-rating {
+        font-family: "Fira Code", monospace;
+        font-size: 6px;
+        color: #cbd5e1 !important;
+      }
+
+      /* ============================================================================
+         6. DARK MODE / LIGHT MODE THEME ENGINE (body.dark-mode)
+         ============================================================================ */
+      #btn-theme-toggle {
+        font-family: "Fira Code", monospace;
+        font-size: 10.5px;
+        font-weight: 700;
+        min-width: 78px;
+        justify-content: center;
+      }
+      body.dark-mode {
+        background: #0f141c !important;
+        color: #e2e8f0 !important;
+      }
+      body.dark-mode #toolbar {
+        background: linear-gradient(180deg, #161d27 0%, #111720 100%) !important;
+        border-bottom: 1px solid #2a3444 !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45) !important;
+      }
+      body.dark-mode .brand-badge {
+        background: #1e2736 !important;
+        color: #f1f5f9 !important;
+        border-color: #334155 !important;
+      }
+      body.dark-mode #status-bar {
+        background: rgba(16, 185, 129, 0.14) !important;
+        color: #34d399 !important;
+        border-color: rgba(52, 211, 153, 0.35) !important;
+      }
+      body.dark-mode #toolbar .btn {
+        background: #1e2633 !important;
+        color: #e2e8f0 !important;
+        border-color: #334155 !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35) !important;
+      }
+      body.dark-mode #toolbar .btn:hover {
+        background: #283344 !important;
+        color: #38bdf8 !important;
+        border-color: #475569 !important;
+      }
+      body.dark-mode #toolbar .btn-action.active {
+        background: rgba(6, 182, 212, 0.2) !important;
+        color: #22d3ee !important;
+        border-color: #06b6d4 !important;
+      }
+      body.dark-mode #toolbar .btn-mode-addpt.active {
+        background: rgba(245, 158, 11, 0.2) !important;
+        color: #fbbf24 !important;
+        border-color: #f59e0b !important;
+      }
+      body.dark-mode #toolbar .btn-delete-mode.active {
+        background: rgba(239, 68, 68, 0.22) !important;
+        color: #f87171 !important;
+        border-color: #ef4444 !important;
+      }
+      body.dark-mode .color-picker,
+      body.dark-mode .zoom-controls {
+        background: #161d27 !important;
+        border-color: #334155 !important;
+      }
+      body.dark-mode .zoom-btn {
+        color: #cbd5e1 !important;
+      }
+      body.dark-mode .zoom-btn:hover {
+        background: #263142 !important;
+        color: #38bdf8 !important;
+      }
+      body.dark-mode #zoom-label {
+        background: #0f141c !important;
+        color: #38bdf8 !important;
+        border-color: #334155 !important;
+      }
+      body.dark-mode #viewport-container {
+        background-color: #0d1117 !important;
+        background-image: radial-gradient(rgba(148, 163, 184, 0.16) 1px, transparent 1px) !important;
+        background-size: 20px 20px !important;
+      }
+      /* Busbar PLN, Panel Tombol, Panel Lampu, dan Motor di Mode Gelap */
+      body.dark-mode #busbar-pln,
+      body.dark-mode #buttons-panel,
+      body.dark-mode #lamp-panel,
+      body.dark-mode #motor-m1,
+      body.dark-mode #motor-m2 {
+        background: linear-gradient(160deg, #1b222d 0%, #141922 100%) !important;
+        border-color: #334155 !important;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55) !important;
+      }
+      body.dark-mode #buttons-panel .comp-header,
+      body.dark-mode #lamp-panel .comp-header,
+      body.dark-mode #motor-m1 .comp-header,
+      body.dark-mode #motor-m2 .comp-header {
+        background: linear-gradient(180deg, #242d3c 0%, #1a212d 100%) !important;
+        color: #e2e8f0 !important;
+        border-color: #334155 !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+      }
+      body.dark-mode .lamp-term-container,
+      body.dark-mode #motor-m1 > div:last-child,
+      body.dark-mode #motor-m2 > div:last-child {
+        background: #0f141c !important;
+        border: 1px solid #2d3848 !important;
+      }
+      body.dark-mode #motor-m1 .term-label,
+      body.dark-mode #motor-m2 .term-label {
+        color: #cbd5e1 !important;
+      }
+      /* Halo kabel di Mode Gelap dibuat lebih kalem namun tetap kontras untuk kabel hitam */
+      body.dark-mode .wire-contrast {
+        stroke: rgba(241, 245, 249, 0.85);
+        stroke-width: 6.2px;
+      }
+      /* Dropdown Menu, Modal Dialog, dan Step-by-Step Panel di Mode Gelap */
+      body.dark-mode .dropdown-menu,
+      body.dark-mode .component-menu-grid {
+        background: #18202c !important;
+        border-color: #334155 !important;
+        color: #e2e8f0 !important;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.65) !important;
+      }
+      body.dark-mode .menu-item,
+      body.dark-mode .menu-item * {
+        color: #cbd5e1 !important;
+      }
+      body.dark-mode .menu-item:hover {
+        background: #253042 !important;
+        color: #38bdf8 !important;
+      }
+      body.dark-mode .menu-divider {
+        background: #2d3848 !important;
+      }
+      body.dark-mode .prog-selector {
+        background: #0f141c !important;
+        color: #38bdf8 !important;
+        border-color: #334155 !important;
+      }
+      body.dark-mode .diag-box {
+        background: #161d27 !important;
+        color: #e2e8f0 !important;
+        border-color: #334155 !important;
+      }
+      body.dark-mode .diag-title {
+        color: #f8fafc !important;
+        border-color: #2d3848 !important;
+      }
+      body.dark-mode .guide-section {
+        background: #111720 !important;
+        border-left-color: #06b6d4 !important;
+      }
+      body.dark-mode .guide-section h4 {
+        color: #22d3ee !important;
+      }
+      body.dark-mode .guide-section p,
+      body.dark-mode .guide-section li,
+      body.dark-mode .diag-box p,
+      body.dark-mode .diag-box li {
+        color: #cbd5e1 !important;
+      }
+      body.dark-mode .diag-summary {
+        background: #111720 !important;
+        border-color: #2d3848 !important;
+        color: #e2e8f0 !important;
+      }
+      body.dark-mode .diag-item {
+        background: #1b2330 !important;
+        border-color: #2d3848 !important;
+        color: #e2e8f0 !important;
+      }
+      body.dark-mode .diag-item small {
+        color: #94a3b8 !important;
+      }
+      body.dark-mode #code-editor {
+        background: #0d1117 !important;
+        color: #34d399 !important;
+        border-color: #334155 !important;
+      }
+      body.dark-mode #step-wire-panel {
+        background: #161d27 !important;
+        color: #e2e8f0 !important;
+        border-color: #334155 !important;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65) !important;
+      }
+      body.dark-mode .swp-title,
+      body.dark-mode .swp-step-desc {
+        color: #f1f5f9 !important;
+      }
+      body.dark-mode .swp-info {
+        background: #111720 !important;
+        border-color: #2d3848 !important;
+      }
+      body.dark-mode .swp-btn:not(.swp-btn-primary):not(.playing) {
+        background: #1e2633 !important;
+        color: #e2e8f0 !important;
+        border-color: #334155 !important;
+      }
+      body.dark-mode .swp-speed-select {
+        background: #0f141c !important;
+        color: #e2e8f0 !important;
+        border-color: #334155 !important;
+      }
+      body.dark-mode #sim-toast {
+        background: #1e2633 !important;
+        color: #f1f5f9 !important;
+        border-color: #475569 !important;
       }
 </style>
   </head>
@@ -1613,7 +3011,7 @@
     <!-- NAVBAR TOOLBAR -->
     <div id="toolbar">
       <div class="tb-left">
-        <div class="brand-badge">CP1E WORKBENCH v4.2 · 2D</div>
+        <div class="brand-badge">CP1E WORKBENCH v4.3 · SKEUOMORPHIC 2D</div>
         <div id="status-bar">STATUS: RUNNING</div>
       </div>
 
@@ -1699,6 +3097,14 @@
       </div>
 
       <div class="tb-right">
+        <button
+          class="btn"
+          id="btn-theme-toggle"
+          onclick="toggleThemeMode()"
+          title="Ganti Mode Gelap / Mode Terang"
+        >
+          🌙 Gelap
+        </button>
         <div class="menu-wrapper">
           <button class="btn btn-more" onclick="toggleMoreMenu(event)">
             ⋮
@@ -1847,142 +3253,266 @@
           </div>
         </div>
 
-        <!-- MCB 1P -->
-        <div class="component" id="mcb">
-          <div class="comp-header">MCB 1P</div>
-          <div class="term-label" style="font-size: 8px">IN</div>
-          <div class="terminal" data-id="MCB_IN"></div>
-
-          <div style="text-align: center">
-            <div class="mcb-switch" id="mcb-toggle">ON</div>
-            <div
-              style="
-                font-size: 8.5px;
-                font-family: &quot;Fira Code&quot;, monospace;
-                color: var(--text-muted);
-                margin-top: 2px;
-              "
-            >
-              6A
+        <!-- MCB 1P: SCHNEIDER ELECTRIC 4A -->
+        <div class="component schneider-mcb mcb-1p" id="mcb">
+          <div class="comp-header">MCB 1P · C4</div>
+          <div class="mcb-din-clip top"></div>
+          <div class="mcb-pocket-row">
+            <div class="mcb-pocket">
+              <span class="mcb-term-num">1 / L1</span>
+              <div class="terminal" data-id="MCB_IN"></div>
             </div>
           </div>
 
-          <div class="term-label" style="font-size: 8px">OUT</div>
-          <div class="terminal" data-id="MCB_OUT"></div>
+          <div class="mcb-faceplate">
+            <div class="mcb-brand-row">
+              <span class="schneider-brand">Schneider <span class="schneider-sub">Electric</span></span>
+            </div>
+            <div class="mcb-model-row">
+              <span class="mcb-series">Domae</span>
+              <span class="mcb-curve">C4</span>
+            </div>
+            <div class="mcb-rating-box">
+              <span>230V~</span>
+              <span class="mcb-ka">4500A</span>
+              <span class="mcb-class">3</span>
+            </div>
+            <div class="visitrip-wrap">
+              <span class="visitrip-label">VisiTrip</span>
+              <div class="visitrip-window" id="mcb-visitrip"></div>
+            </div>
+            <div class="mcb-toggle-well">
+              <div class="mcb-switch" id="mcb-toggle" title="Klik untuk ON / OFF MCB 1-Fasa C4">ON</div>
+            </div>
+          </div>
+
+          <div class="mcb-pocket-row bottom">
+            <div class="mcb-pocket">
+              <div class="terminal" data-id="MCB_OUT"></div>
+              <span class="mcb-term-num">2 / T1</span>
+            </div>
+          </div>
+          <div class="mcb-din-clip bottom"></div>
         </div>
 
-        <!-- MCB NETRAL PLN -->
-        <div class="component mcb-extra" id="mcb-neutral">
+        <!-- MCB NETRAL PLN (1P SCHNEIDER STYLE) -->
+        <div class="component mcb-extra schneider-mcb mcb-1p" id="mcb-neutral">
           <div class="comp-header">MCB NETRAL</div>
-          <div class="term-label">IN N</div>
-          <div class="terminal" data-id="MCBN_IN"></div>
-          <div style="text-align:center">
-            <div class="mcb-switch" id="mcbn-toggle">ON</div>
-            <div style="font-size:8.5px;color:var(--text-muted);margin-top:2px">N</div>
+          <div class="mcb-din-clip top"></div>
+          <div class="mcb-pocket-row">
+            <div class="mcb-pocket">
+              <span class="mcb-term-num" style="color:#0284c7">1 / N</span>
+              <div class="terminal" data-id="MCBN_IN"></div>
+            </div>
           </div>
-          <div class="term-label">OUT N</div>
-          <div class="terminal" data-id="MCBN_OUT"></div>
+
+          <div class="mcb-faceplate">
+            <div class="mcb-brand-row">
+              <span class="schneider-brand">Schneider <span class="schneider-sub">Electric</span></span>
+            </div>
+            <div class="mcb-model-row">
+              <span class="mcb-series">Acti9</span>
+              <span class="mcb-curve">iC60N</span>
+            </div>
+            <div class="mcb-rating-box">
+              <span>230V~</span>
+              <span class="mcb-ka">6000A</span>
+              <span class="mcb-class">N</span>
+            </div>
+            <div class="visitrip-wrap">
+              <span class="visitrip-label">VisiSafe</span>
+              <div class="visitrip-window"></div>
+            </div>
+            <div class="mcb-toggle-well">
+              <div class="mcb-switch" id="mcbn-toggle" title="Klik untuk ON / OFF Isolator Netral">ON</div>
+            </div>
+          </div>
+
+          <div class="mcb-pocket-row bottom">
+            <div class="mcb-pocket">
+              <div class="terminal" data-id="MCBN_OUT"></div>
+              <span class="mcb-term-num" style="color:#0284c7">2 / N</span>
+            </div>
+          </div>
+          <div class="mcb-din-clip bottom"></div>
         </div>
 
-        <!-- MCB 3 FASA UNTUK RANGKAIAN DAYA MOTOR -->
-        <div class="component mcb-extra" id="mcb-3phase">
-          <div class="comp-header">MCB 3-PHASE</div>
-          <div style="display:flex;justify-content:space-around;gap:4px;margin-top:7px">
-            <div style="text-align:center"><div class="term-label" style="color:#e74c3c">R IN</div><div class="terminal" data-id="MCB3_IN_L1"></div></div>
-            <div style="text-align:center"><div class="term-label" style="color:#f39c12">S IN</div><div class="terminal" data-id="MCB3_IN_L2"></div></div>
-            <div style="text-align:center"><div class="term-label" style="color:#27ae60">T IN</div><div class="terminal" data-id="MCB3_IN_L3"></div></div>
+        <!-- MCB 3-PHASE: SCHNEIDER ELECTRIC 10A (ACTI9 / DOMAE STYLE) -->
+        <div class="component mcb-extra schneider-mcb mcb-3p" id="mcb-3phase">
+          <div class="comp-header">MCB 3-PHASE · C10</div>
+          <div class="mcb-din-clip top"></div>
+          <div class="mcb-pole-dividers" aria-hidden="true">
+            <span></span><span></span>
           </div>
-          <div style="text-align:center;margin:8px 0">
-            <div class="mcb-switch" id="mcb3-toggle">ON</div>
-            <div style="font-size:8.5px;color:var(--text-muted);margin-top:2px">3P • DAYA MOTOR</div>
+
+          <div class="mcb-pocket-row three-pole">
+            <div class="mcb-pocket">
+              <span class="mcb-term-num" style="color:#dc2626">1 / L1</span>
+              <div class="terminal" data-id="MCB3_IN_L1"></div>
+            </div>
+            <div class="mcb-pocket">
+              <span class="mcb-term-num" style="color:#d97706">3 / L2</span>
+              <div class="terminal" data-id="MCB3_IN_L2"></div>
+            </div>
+            <div class="mcb-pocket">
+              <span class="mcb-term-num" style="color:#16a34a">5 / L3</span>
+              <div class="terminal" data-id="MCB3_IN_L3"></div>
+            </div>
           </div>
-          <div style="display:flex;justify-content:space-around;gap:4px;margin-bottom:5px">
-            <div style="text-align:center"><div class="term-label">R OUT</div><div class="terminal" data-id="MCB3_OUT_L1"></div></div>
-            <div style="text-align:center"><div class="term-label">S OUT</div><div class="terminal" data-id="MCB3_OUT_L2"></div></div>
-            <div style="text-align:center"><div class="term-label">T OUT</div><div class="terminal" data-id="MCB3_OUT_L3"></div></div>
+
+          <div class="mcb-faceplate mcb-3p-face">
+            <div class="mcb-3p-top-meta">
+              <div class="mcb-brand-block">
+                <span class="schneider-brand">Schneider<span class="schneider-sub">Electric</span></span>
+                <span class="mcb-acti9-tag">Acti<b>9</b> iC60N</span>
+              </div>
+              <div class="mcb-3p-specs">
+                <span class="mcb-curve-lg">C10</span>
+                <div class="mcb-rating-box">
+                  <span>400V~</span>
+                  <span class="mcb-ka">4500A</span>
+                  <span class="mcb-class">3</span>
+                </div>
+              </div>
+              <svg class="mcb-symbol-3p" viewBox="0 0 54 24" aria-hidden="true">
+                <g stroke="#334155" stroke-width="1.2" fill="none" stroke-linecap="round">
+                  <path d="M9 2 v5 l-4 8 M9 15 v7 M7 4 l4 3 M7 7 l4 -3"/>
+                  <path d="M27 2 v5 l-4 8 M27 15 v7 M25 4 l4 3 M25 7 l4 -3"/>
+                  <path d="M45 2 v5 l-4 8 M45 15 v7 M43 4 l4 3 M43 7 l4 -3"/>
+                  <path d="M6 11 H44" stroke-dasharray="2 1.5"/>
+                </g>
+              </svg>
+            </div>
+
+            <div class="visitrip-row-3p">
+              <span class="visitrip-label">VisiTrip / VisiSafe</span>
+              <div class="visitrip-windows-3p">
+                <div class="visitrip-window"></div>
+                <div class="visitrip-window"></div>
+                <div class="visitrip-window"></div>
+              </div>
+            </div>
+
+            <div class="mcb-toggle-well well-3p">
+              <div class="mcb-switch mcb-switch-ganged" id="mcb3-toggle" title="Klik untuk ON / OFF MCB 3-Fasa C10">ON</div>
+            </div>
+          </div>
+
+          <div class="mcb-pocket-row three-pole bottom">
+            <div class="mcb-pocket">
+              <div class="terminal" data-id="MCB3_OUT_L1"></div>
+              <span class="mcb-term-num">2 / T1</span>
+            </div>
+            <div class="mcb-pocket">
+              <div class="terminal" data-id="MCB3_OUT_L2"></div>
+              <span class="mcb-term-num">4 / T2</span>
+            </div>
+            <div class="mcb-pocket">
+              <div class="terminal" data-id="MCB3_OUT_L3"></div>
+              <span class="mcb-term-num">6 / T3</span>
+            </div>
+          </div>
+          <div class="mcb-din-clip bottom"></div>
+        </div>
+
+        <!-- POWER SUPPLY UNIT (PSU): 12V DC SWITCHING METAL MESH ENCLOSURE -->
+        <div class="component psu-metal-comp" id="psu">
+          <div class="comp-header">POWER SUPPLY 12V DC</div>
+          <div class="psu-chassis">
+            <div class="psu-mesh-area">
+              <div class="psu-honeycomb"></div>
+              <div class="psu-internal-glow"></div>
+              <div class="psu-plate">
+                <div class="psu-plate-brand">SWITCHING POWER SUPPLY</div>
+                <div class="psu-plate-main">12V DC REGULATED OUTPUT</div>
+                <div class="psu-plate-sub">INPUT: 100-240VAC 50/60Hz · OUTPUT: 12V ⎓ 10A</div>
+              </div>
+            </div>
+
+            <div class="psu-trimmer-bar">
+              <div class="psu-Model-tag">S-120-12</div>
+              <div class="psu-adj-group">
+                <div class="psu-vadj-pot" title="Trimmer Penyesuaian Tegangan V.ADJ (10.8V – 13.2V)">
+                  <span class="psu-vadj-slot"></span>
+                </div>
+                <span class="psu-adj-label">V.ADJ</span>
+              </div>
+              <div class="psu-led-group">
+                <span class="psu-dc-ok-led" id="psu-led-ok"></span>
+                <span class="psu-adj-label">DC OK</span>
+              </div>
+            </div>
+
+            <div class="psu-terminal-block">
+              <div class="psu-acrylic-guard" aria-hidden="true"></div>
+              <div class="psu-term-cell">
+                <div class="term-label" style="color: #dc2626">L</div>
+                <div class="psu-barrier">
+                  <div class="terminal" data-id="PSU_AC_L"></div>
+                </div>
+              </div>
+              <div class="psu-term-cell">
+                <div class="term-label" style="color: #0284c7">N</div>
+                <div class="psu-barrier">
+                  <div class="terminal" data-id="PSU_AC_N"></div>
+                </div>
+              </div>
+              <div class="psu-term-cell">
+                <div class="term-label" style="color: #15803d">FG ⏚</div>
+                <div class="psu-barrier">
+                  <div class="terminal dummy-term" title="Frame Ground (FG) — Pelindung Pembumian" style="opacity: 0.72; pointer-events: none"></div>
+                </div>
+              </div>
+              <div class="psu-term-cell">
+                <div class="term-label" style="color: #334155">-V</div>
+                <div class="psu-barrier">
+                  <div class="terminal" data-id="PSU_-V"></div>
+                </div>
+              </div>
+              <div class="psu-term-cell">
+                <div class="term-label" style="color: #64748b">-V</div>
+                <div class="psu-barrier">
+                  <div class="terminal dummy-term" title="Terminal paralel -V (0V DC)" style="opacity: 0.65; pointer-events: none"></div>
+                </div>
+              </div>
+              <div class="psu-term-cell">
+                <div class="term-label" style="color: #dc2626">+V</div>
+                <div class="psu-barrier">
+                  <div class="terminal" data-id="PSU_+V"></div>
+                </div>
+              </div>
+              <div class="psu-term-cell">
+                <div class="term-label" style="color: #ef4444">+V</div>
+                <div class="psu-barrier">
+                  <div class="terminal dummy-term" title="Terminal paralel +V (+12V DC)" style="opacity: 0.65; pointer-events: none"></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- PSU 24V DC -->
-        <div class="component" id="psu">
-          <div class="comp-header">POWER SUPPLY 24V DC</div>
-          <div class="psu-grill">
-            <div class="psu-plate">REGULATED DC</div>
-          </div>
-          <div class="psu-terminal-block">
-            <div
-              style="
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 2px;
-              "
-            >
-              <div class="term-label" style="color: #ff7675">L</div>
-              <div class="terminal" data-id="PSU_AC_L"></div>
-            </div>
-            <div
-              style="
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 2px;
-              "
-            >
-              <div class="term-label" style="color: #74b9ff">N</div>
-              <div class="terminal" data-id="PSU_AC_N"></div>
-            </div>
-            <div
-              style="
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 2px;
-              "
-            >
-              <div class="term-label" style="color: #fab1a0">-V</div>
-              <div class="terminal" data-id="PSU_-V"></div>
-            </div>
-            <div
-              style="
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 2px;
-              "
-            >
-              <div class="term-label" style="color: #ff3838">+V</div>
-              <div class="terminal" data-id="PSU_+V"></div>
-            </div>
-          </div>
-        </div>
+        <!-- OMRON SYSMAC CP1E-E20DR-A -->
+        <div class="component cp1e-unit" id="plc">
+          <div class="comp-header">OMRON SYSMAC CP1E-E20DR-A</div>
 
-        <!-- OMRON PLC CP1E E20 -->
-        <div class="component" id="plc">
-          <div class="terminal-rack">
-            <div
-              style="
-                font-size: 8px;
-                font-family: &quot;Fira Code&quot;, monospace;
-                color: var(--accent-teal);
-                text-align: center;
-              "
-            >
-              INPUT TERMINALS (CH 00)
+          <!-- COVER PENUTUP TERMINAL ATAS (INPUT) BERTINGKAT -->
+          <div class="terminal-rack cp1e-input-rack">
+            <div class="cp1e-cover-lip top-lip">
+              <span>AC100-240V 50/60Hz</span>
+              <span>INPUTS 24VDC · CH 0 (00–11)</span>
             </div>
-            <div class="terminal-tier">
+            <!-- Baris Atas: L1, L2/N, COM, 01, 03, 05, 07, 09, 11 -->
+            <div class="terminal-tier tier-upper">
               <div class="plc-term-wrap">
-                <div class="term-label" style="color: #ff7675">L1</div>
+                <div class="term-label" style="color: #fca5a5">L1</div>
                 <div class="terminal" data-id="PLC_L1"></div>
               </div>
               <div class="plc-term-wrap">
-                <div class="term-label" style="color: #74b9ff">L2/N</div>
+                <div class="term-label" style="color: #93c5fd">L2/N</div>
                 <div class="terminal" data-id="PLC_L2N"></div>
               </div>
               <div class="plc-term-wrap">
-                <div class="term-label" style="color: var(--accent-amber)">
-                  COM
-                </div>
+                <div class="term-label" style="color: #fcd34d">COM</div>
                 <div class="terminal" data-id="PLC_IN_COM"></div>
               </div>
               <div class="plc-term-wrap">
@@ -2010,24 +3540,15 @@
                 <div class="terminal" data-id="PLC_IN_11"></div>
               </div>
             </div>
-            <div class="terminal-tier">
+            <!-- Baris Bawah: NC, NC, 00, 02, 04, 06, 08, 10 -->
+            <div class="terminal-tier tier-lower">
               <div class="plc-term-wrap">
-                <div class="term-label" style="color: var(--text-muted)">
-                  NC
-                </div>
-                <div
-                  class="terminal dummy-term"
-                  style="opacity: 0.2; pointer-events: none"
-                ></div>
+                <div class="term-label" style="color: #94a3b8">NC</div>
+                <div class="terminal dummy-term" style="opacity: 0.45; pointer-events: none"></div>
               </div>
               <div class="plc-term-wrap">
-                <div class="term-label" style="color: var(--text-muted)">
-                  NC
-                </div>
-                <div
-                  class="terminal dummy-term"
-                  style="opacity: 0.2; pointer-events: none"
-                ></div>
+                <div class="term-label" style="color: #94a3b8">NC</div>
+                <div class="terminal dummy-term" style="opacity: 0.45; pointer-events: none"></div>
               </div>
               <div class="plc-term-wrap">
                 <div class="term-label">00</div>
@@ -2054,120 +3575,119 @@
                 <div class="terminal" data-id="PLC_IN_10"></div>
               </div>
               <div class="plc-term-wrap">
-                <div class="term-label">-</div>
-                <div
-                  class="terminal dummy-term"
-                  style="opacity: 0; pointer-events: none"
-                ></div>
+                <div class="term-label" style="opacity:0.35">⏚</div>
+                <div class="terminal dummy-term" style="opacity: 0.25; pointer-events: none"></div>
               </div>
             </div>
           </div>
 
-          <div class="plc-mid">
-            <div
-              style="
-                font-weight: 700;
-                font-size: 11px;
-                letter-spacing: 1px;
-                color: #fff;
-                font-family: &quot;Fira Code&quot;, monospace;
-              "
-            >
-              OMRON SYSMAC CP1E
-            </div>
-            <div class="plc-led-panel">
-              <div style="text-align: center">
-                <div class="led" id="led-pwr"></div>
-                PWR
+          <!-- PANEL INDIKATOR TENGAH & PORT USB TIPE-B -->
+          <div class="plc-mid cp1e-faceplate">
+            <div class="cp1e-face-top">
+              <!-- Area Port Komunikasi USB Tipe-B dengan Penutup Karet -->
+              <div class="cp1e-usb-bay" title="Peripheral USB Type-B Programming Port (CP1E)">
+                <div class="cp1e-rubber-cap">
+                  <span class="usb-icon-sym">🔌 USB</span>
+                </div>
+                <div class="cp1e-usb-socket">
+                  <div class="usb-b-shell">
+                    <div class="usb-b-pin-core"></div>
+                  </div>
+                </div>
+                <span class="cp1e-port-label">PERIPHERAL</span>
               </div>
-              <div style="text-align: center">
-                <div class="led" id="led-in-00"></div>
-                00
+
+              <!-- Branding OMRON SYSMAC CP1E -->
+              <div class="cp1e-brand-center">
+                <div class="omron-logo-text">OMRON</div>
+                <div class="sysmac-model-text">SYSMAC <span>CP1E</span></div>
+                <div class="cp1e-submodel-badge">CP1E-E20DR-A</div>
               </div>
-              <div style="text-align: center">
-                <div class="led" id="led-in-01"></div>
-                01
-              </div>
-              <div style="text-align: center">
-                <div class="led" id="led-in-02"></div>
-                02
-              </div>
-              <div style="text-align: center">
-                <div class="led" id="led-in-03"></div>
-                03
-              </div>
-              <div style="text-align: center">
-                <div class="led" id="led-in-04"></div>
-                04
-              </div>
-              <div style="text-align: center">
-                <div class="led" id="led-in-05"></div>
-                05
-              </div>
-              <div style="text-align: center">
-                <div class="led" id="led-in-06"></div>
-                06
-              </div>
-              <div style="text-align: center">
-                <div class="led" id="led-in-07"></div>
-                07
+
+              <!-- Window LED Status: PWR, RUN, ERR/ALM, INH, BKUP, PRPHL -->
+              <div class="cp1e-status-window">
+                <div class="status-led-row">
+                  <span class="led" id="led-pwr"></span>
+                  <span class="status-lbl">PWR</span>
+                </div>
+                <div class="status-led-row">
+                  <span class="led" id="led-run"></span>
+                  <span class="status-lbl">RUN</span>
+                </div>
+                <div class="status-led-row">
+                  <span class="led" id="led-err"></span>
+                  <span class="status-lbl">ERR/ALM</span>
+                </div>
+                <div class="status-led-row">
+                  <span class="led" id="led-inh"></span>
+                  <span class="status-lbl">INH</span>
+                </div>
+                <div class="status-led-row">
+                  <span class="led" id="led-prphl"></span>
+                  <span class="status-lbl">PRPHL</span>
+                </div>
               </div>
             </div>
-            <div
-              class="plc-led-panel"
-              style="grid-template-columns: repeat(8, 1fr); width: 85%"
-            >
-              <div style="text-align: center">
-                <div class="led" id="led-out-00"></div>
-                100.00
+
+            <!-- Grid LED Input 00 s.d 11 & Output 00 s.d 07 (Amber/Oranye) -->
+            <div class="cp1e-io-windows">
+              <div class="cp1e-io-block">
+                <div class="io-block-header">
+                  <span>IN</span>
+                  <span>0CH</span>
+                </div>
+                <div class="plc-led-panel cp1e-in-grid">
+                  <div class="io-cell"><div class="led" id="led-in-00"></div><span>00</span></div>
+                  <div class="io-cell"><div class="led" id="led-in-01"></div><span>01</span></div>
+                  <div class="io-cell"><div class="led" id="led-in-02"></div><span>02</span></div>
+                  <div class="io-cell"><div class="led" id="led-in-03"></div><span>03</span></div>
+                  <div class="io-cell"><div class="led" id="led-in-04"></div><span>04</span></div>
+                  <div class="io-cell"><div class="led" id="led-in-05"></div><span>05</span></div>
+                  <div class="io-cell"><div class="led" id="led-in-06"></div><span>06</span></div>
+                  <div class="io-cell"><div class="led" id="led-in-07"></div><span>07</span></div>
+                  <div class="io-cell"><div class="led" id="led-in-08"></div><span>08</span></div>
+                  <div class="io-cell"><div class="led" id="led-in-09"></div><span>09</span></div>
+                  <div class="io-cell"><div class="led" id="led-in-10"></div><span>10</span></div>
+                  <div class="io-cell"><div class="led" id="led-in-11"></div><span>11</span></div>
+                </div>
               </div>
-              <div style="text-align: center">
-                <div class="led" id="led-out-01"></div>
-                100.01
-              </div>
-              <div style="text-align: center">
-                <div class="led" id="led-out-02"></div>
-                100.02
-              </div>
-              <div style="text-align: center">
-                <div class="led" id="led-out-03"></div>
-                100.03
-              </div>
-              <div style="text-align: center">
-                <div class="led" id="led-out-04"></div>
-                100.04
-              </div>
-              <div style="text-align: center">
-                <div class="led" id="led-out-05"></div>
-                100.05
-              </div>
-              <div style="text-align: center">
-                <div class="led" id="led-out-06"></div>
-                100.06
-              </div>
-              <div style="text-align: center">
-                <div class="led" id="led-out-07"></div>
-                100.07
+
+              <div class="cp1e-io-block">
+                <div class="io-block-header out-hdr">
+                  <span>OUT</span>
+                  <span>100CH (00–07)</span>
+                </div>
+                <div class="plc-led-panel cp1e-out-grid">
+                  <div class="io-cell"><div class="led" id="led-out-00"></div><span>00</span></div>
+                  <div class="io-cell"><div class="led" id="led-out-01"></div><span>01</span></div>
+                  <div class="io-cell"><div class="led" id="led-out-02"></div><span>02</span></div>
+                  <div class="io-cell"><div class="led" id="led-out-03"></div><span>03</span></div>
+                  <div class="io-cell"><div class="led" id="led-out-04"></div><span>04</span></div>
+                  <div class="io-cell"><div class="led" id="led-out-05"></div><span>05</span></div>
+                  <div class="io-cell"><div class="led" id="led-out-06"></div><span>06</span></div>
+                  <div class="io-cell"><div class="led" id="led-out-07"></div><span>07</span></div>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- TERMINAL OUTPUT RELAY (CH 100) ASLI OMRON E20 -->
-          <div class="terminal-rack">
+          <!-- TERMINAL BAWAH (OUTPUT RELAY BLOCK ASLI: COM0, COM1, COM2, COM3, COM4) -->
+          <div class="terminal-rack cp1e-output-rack">
             <div class="output-section-title">
-              OUTPUT RELAY CONTACTS (CH 100)
+              OUTPUT RELAY CONTACTS · CH 100 (COM0 · COM1 · COM2 · COM3 · COM4)
             </div>
-            <div class="terminal-tier">
+            <!-- Tier Atas Output -->
+            <div class="terminal-tier tier-upper">
               <div class="plc-term-wrap">
-                <div class="term-label" style="color: #ff7675">00</div>
+                <div class="term-label" style="color: #fca5a5">00</div>
                 <div class="terminal" data-id="PLC_OUT_00"></div>
               </div>
               <div class="plc-term-wrap">
-                <div class="term-label" style="color: #55efc4">01</div>
+                <div class="term-label" style="color: #86efac">01</div>
                 <div class="terminal" data-id="PLC_OUT_01"></div>
               </div>
               <div class="plc-term-wrap">
-                <div class="term-label" style="color: #ffeaa7">02</div>
+                <div class="term-label" style="color: #fde047">02</div>
                 <div class="terminal" data-id="PLC_OUT_02"></div>
               </div>
               <div class="plc-term-wrap">
@@ -2186,45 +3706,44 @@
                 <div class="term-label">07</div>
                 <div class="terminal" data-id="PLC_OUT_07"></div>
               </div>
-            </div>
-            <div class="terminal-tier">
               <div class="plc-term-wrap">
-                <div class="term-label" style="color: #fab1a0">COM0</div>
+                <div class="term-label" style="color: #94a3b8">NC</div>
+                <div class="terminal dummy-term" style="opacity: 0.45; pointer-events: none"></div>
+              </div>
+            </div>
+            <!-- Tier Bawah Output: Grup Relay Terpisah COM0, COM1, COM2, COM3, COM4 -->
+            <div class="terminal-tier tier-lower">
+              <div class="plc-term-wrap relay-grp-sep">
+                <div class="term-label" style="color: #fdba74">COM0</div>
                 <div class="terminal" data-id="PLC_OUT_COM0"></div>
               </div>
-              <div class="plc-term-wrap">
-                <div class="term-label" style="color: #fab1a0">COM1</div>
+              <div class="plc-term-wrap relay-grp-sep">
+                <div class="term-label" style="color: #fdba74">COM1</div>
                 <div class="terminal" data-id="PLC_OUT_COM1"></div>
               </div>
               <div class="plc-term-wrap">
-                <div class="term-label" style="color: var(--text-muted)">
-                  NC
-                </div>
-                <div
-                  class="terminal dummy-term"
-                  style="opacity: 0.2; pointer-events: none"
-                ></div>
+                <div class="term-label" style="color: #94a3b8">NC</div>
+                <div class="terminal dummy-term" style="opacity: 0.45; pointer-events: none"></div>
               </div>
-              <div class="plc-term-wrap">
-                <div class="term-label" style="color: #fab1a0">COM2</div>
+              <div class="plc-term-wrap relay-grp-sep">
+                <div class="term-label" style="color: #fdba74">COM2</div>
                 <div class="terminal" data-id="PLC_OUT_COM2"></div>
               </div>
               <div class="plc-term-wrap">
-                <div class="term-label" style="color: var(--text-muted)">
-                  NC
-                </div>
-                <div
-                  class="terminal dummy-term"
-                  style="opacity: 0.2; pointer-events: none"
-                ></div>
+                <div class="term-label" style="color: #94a3b8">NC</div>
+                <div class="terminal dummy-term" style="opacity: 0.45; pointer-events: none"></div>
               </div>
               <div class="plc-term-wrap">
-                <div class="term-label" style="color: #fab1a0">COM3</div>
+                <div class="term-label" style="color: #fdba74">COM3</div>
                 <div class="terminal" data-id="PLC_OUT_COM3"></div>
               </div>
-              <div class="plc-term-wrap">
+              <div class="plc-term-wrap relay-grp-sep">
                 <div class="term-label">06</div>
                 <div class="terminal" data-id="PLC_OUT_06"></div>
+              </div>
+              <div class="plc-term-wrap">
+                <div class="term-label" style="color: #fdba74">COM4</div>
+                <div class="terminal dummy-term" title="COM4 — Common Relay Group 4" style="opacity: 0.78; pointer-events: none"></div>
               </div>
             </div>
           </div>
@@ -2352,180 +3871,206 @@
           </div>
         </div>
 
-        <!-- KONTAKTOR K1 (3-POLE) -->
-        <div class="component contactor-comp" id="contactor-k1">
-          <div class="comp-header">KONTAKTOR K1</div>
-          <div class="plunger-window">
-            <div class="plunger" id="plunger-k1"></div>
-            <span
-              style="
-                font-size: 7px;
-                font-family: &quot;Fira Code&quot;, monospace;
-                color: var(--text-muted);
-                margin-top: 2px;
-              "
-              >COIL 220V</span
-            >
-          </div>
-          <div
-            style="
-              display: flex;
-              justify-content: space-between;
-              background: #16181f;
-              padding: 3px;
-              border-radius: 4px;
-            "
-          >
-            <div style="text-align: center">
-              <div class="term-label" style="color: #ff7675">A1</div>
+        <!-- KONTAKTOR K1: MITSUBISHI ELECTRIC SN-21 (3-POLE + AUX NO/NC) -->
+        <div class="component contactor-comp sn21-contactor" id="contactor-k1">
+          <div class="comp-header">KONTAKTOR K1 · SN-21</div>
+
+          <!-- Baris Atas: Koil A1 + Terminal Utama Atas (1/L1, 3/L2, 5/L3) + Aux Atas (13 NO, 21 NC) -->
+          <div class="sn21-coil-top-bar">
+            <span class="sn21-coil-spec">Coil: 220-240V 50Hz</span>
+            <div class="sn21-coil-term">
+              <span class="term-label" style="color: #dc2626">A1</span>
               <div class="terminal" data-id="K1_A1"></div>
             </div>
-            <div style="text-align: center">
-              <div class="term-label" style="color: #74b9ff">A2</div>
+          </div>
+
+          <div class="sn21-term-tier top-tier">
+            <div class="sn21-main-group">
+              <div class="sn21-slot">
+                <div class="term-label">1/L1</div>
+                <div class="terminal" data-id="K1_L1"></div>
+              </div>
+              <div class="sn21-slot">
+                <div class="term-label">3/L2</div>
+                <div class="terminal" data-id="K1_L2"></div>
+              </div>
+              <div class="sn21-slot">
+                <div class="term-label">5/L3</div>
+                <div class="terminal" data-id="K1_L3"></div>
+              </div>
+            </div>
+            <div class="sn21-aux-group">
+              <div class="sn21-slot aux-slot">
+                <div class="term-label">13<small>NO</small></div>
+                <div class="terminal dummy-term" title="Kontak Bantu 13 (NO) Mitsubishi SN-21" style="opacity:0.78;pointer-events:none"></div>
+              </div>
+              <div class="sn21-slot aux-slot">
+                <div class="term-label">21<small>NC</small></div>
+                <div class="terminal dummy-term" title="Kontak Bantu 21 (NC) Mitsubishi SN-21" style="opacity:0.78;pointer-events:none"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bodi Tengah: Plat Nama Mitsubishi SN-21 & Jendela Inti Plunger Mekanis -->
+          <div class="sn21-center-bridge">
+            <div class="sn21-nameplate">
+              <div class="mitsubishi-brand">
+                <svg class="mitsubishi-diamonds" viewBox="0 0 24 21" aria-hidden="true">
+                  <polygon points="12,0 16,7 12,14 8,7" fill="#e11d48"/>
+                  <polygon points="12,14 20,14 24,21 16,21" fill="#e11d48"/>
+                  <polygon points="12,14 4,14 0,21 8,21" fill="#e11d48"/>
+                </svg>
+                <span class="mitsubishi-text">MITSUBISHI</span>
+              </div>
+              <span class="sn21-model-badge">S-N21</span>
+            </div>
+
+            <div class="plunger-window">
+              <div class="plunger-recess">
+                <div class="plunger" id="plunger-k1"></div>
+              </div>
+              <div class="sn21-ratings-col">
+                <span class="sn21-ac3-rating">AC-3 5.5kW 22A</span>
+                <span class="sn21-ith-rating">Ith 32A · UI 690V</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Baris Bawah: Terminal Utama Bawah (2/T1, 4/T2, 6/T3) + Aux Bawah (14 NO, 22 NC) + Koil A2 -->
+          <div class="sn21-term-tier bottom-tier">
+            <div class="sn21-main-group">
+              <div class="sn21-slot">
+                <div class="terminal" data-id="K1_T1"></div>
+                <div class="term-label">2/T1</div>
+              </div>
+              <div class="sn21-slot">
+                <div class="terminal" data-id="K1_T2"></div>
+                <div class="term-label">4/T2</div>
+              </div>
+              <div class="sn21-slot">
+                <div class="terminal" data-id="K1_T3"></div>
+                <div class="term-label">6/T3</div>
+              </div>
+            </div>
+            <div class="sn21-aux-group">
+              <div class="sn21-slot aux-slot">
+                <div class="terminal dummy-term" title="Kontak Bantu 14 (NO) Mitsubishi SN-21" style="opacity:0.78;pointer-events:none"></div>
+                <div class="term-label">14<small>NO</small></div>
+              </div>
+              <div class="sn21-slot aux-slot">
+                <div class="terminal dummy-term" title="Kontak Bantu 22 (NC) Mitsubishi SN-21" style="opacity:0.78;pointer-events:none"></div>
+                <div class="term-label">22<small>NC</small></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sn21-coil-bottom-bar">
+            <span class="sn21-aux-caption">MAIN 3P + AUX 1NO1NC</span>
+            <div class="sn21-coil-term">
               <div class="terminal" data-id="K1_A2"></div>
-            </div>
-          </div>
-          <div
-            style="
-              font-size: 7.5px;
-              font-family: &quot;Fira Code&quot;, monospace;
-              color: var(--accent-teal);
-              text-align: center;
-            "
-          >
-            MAIN CONTACTS
-          </div>
-          <div
-            style="
-              display: flex;
-              justify-content: space-around;
-              background: #16181f;
-              padding: 3px;
-              border-radius: 4px;
-            "
-          >
-            <div style="text-align: center">
-              <div class="term-label">L1</div>
-              <div class="terminal" data-id="K1_L1"></div>
-            </div>
-            <div style="text-align: center">
-              <div class="term-label">L2</div>
-              <div class="terminal" data-id="K1_L2"></div>
-            </div>
-            <div style="text-align: center">
-              <div class="term-label">L3</div>
-              <div class="terminal" data-id="K1_L3"></div>
-            </div>
-          </div>
-          <div
-            style="
-              display: flex;
-              justify-content: space-around;
-              background: #16181f;
-              padding: 3px;
-              border-radius: 4px;
-            "
-          >
-            <div style="text-align: center">
-              <div class="term-label">T1</div>
-              <div class="terminal" data-id="K1_T1"></div>
-            </div>
-            <div style="text-align: center">
-              <div class="term-label">T2</div>
-              <div class="terminal" data-id="K1_T2"></div>
-            </div>
-            <div style="text-align: center">
-              <div class="term-label">T3</div>
-              <div class="terminal" data-id="K1_T3"></div>
+              <span class="term-label" style="color: #0284c7">A2</span>
             </div>
           </div>
         </div>
 
-        <!-- KONTAKTOR K2 (3-POLE) -->
-        <div class="component contactor-comp" id="contactor-k2">
-          <div class="comp-header">KONTAKTOR K2</div>
-          <div class="plunger-window">
-            <div class="plunger" id="plunger-k2"></div>
-            <span
-              style="
-                font-size: 7px;
-                font-family: &quot;Fira Code&quot;, monospace;
-                color: var(--text-muted);
-                margin-top: 2px;
-              "
-              >COIL 220V</span
-            >
-          </div>
-          <div
-            style="
-              display: flex;
-              justify-content: space-between;
-              background: #16181f;
-              padding: 3px;
-              border-radius: 4px;
-            "
-          >
-            <div style="text-align: center">
-              <div class="term-label" style="color: #ff7675">A1</div>
+        <!-- KONTAKTOR K2: MITSUBISHI ELECTRIC SN-21 (3-POLE + AUX NO/NC) -->
+        <div class="component contactor-comp sn21-contactor" id="contactor-k2">
+          <div class="comp-header">KONTAKTOR K2 · SN-21</div>
+
+          <!-- Baris Atas: Koil A1 + Terminal Utama Atas (1/L1, 3/L2, 5/L3) + Aux Atas (13 NO, 21 NC) -->
+          <div class="sn21-coil-top-bar">
+            <span class="sn21-coil-spec">Coil: 220-240V 50Hz</span>
+            <div class="sn21-coil-term">
+              <span class="term-label" style="color: #dc2626">A1</span>
               <div class="terminal" data-id="K2_A1"></div>
             </div>
-            <div style="text-align: center">
-              <div class="term-label" style="color: #74b9ff">A2</div>
+          </div>
+
+          <div class="sn21-term-tier top-tier">
+            <div class="sn21-main-group">
+              <div class="sn21-slot">
+                <div class="term-label">1/L1</div>
+                <div class="terminal" data-id="K2_L1"></div>
+              </div>
+              <div class="sn21-slot">
+                <div class="term-label">3/L2</div>
+                <div class="terminal" data-id="K2_L2"></div>
+              </div>
+              <div class="sn21-slot">
+                <div class="term-label">5/L3</div>
+                <div class="terminal" data-id="K2_L3"></div>
+              </div>
+            </div>
+            <div class="sn21-aux-group">
+              <div class="sn21-slot aux-slot">
+                <div class="term-label">13<small>NO</small></div>
+                <div class="terminal dummy-term" title="Kontak Bantu 13 (NO) Mitsubishi SN-21" style="opacity:0.78;pointer-events:none"></div>
+              </div>
+              <div class="sn21-slot aux-slot">
+                <div class="term-label">21<small>NC</small></div>
+                <div class="terminal dummy-term" title="Kontak Bantu 21 (NC) Mitsubishi SN-21" style="opacity:0.78;pointer-events:none"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bodi Tengah: Plat Nama Mitsubishi SN-21 & Jendela Inti Plunger Mekanis -->
+          <div class="sn21-center-bridge">
+            <div class="sn21-nameplate">
+              <div class="mitsubishi-brand">
+                <svg class="mitsubishi-diamonds" viewBox="0 0 24 21" aria-hidden="true">
+                  <polygon points="12,0 16,7 12,14 8,7" fill="#e11d48"/>
+                  <polygon points="12,14 20,14 24,21 16,21" fill="#e11d48"/>
+                  <polygon points="12,14 4,14 0,21 8,21" fill="#e11d48"/>
+                </svg>
+                <span class="mitsubishi-text">MITSUBISHI</span>
+              </div>
+              <span class="sn21-model-badge">S-N21</span>
+            </div>
+
+            <div class="plunger-window">
+              <div class="plunger-recess">
+                <div class="plunger" id="plunger-k2"></div>
+              </div>
+              <div class="sn21-ratings-col">
+                <span class="sn21-ac3-rating">AC-3 5.5kW 22A</span>
+                <span class="sn21-ith-rating">Ith 32A · UI 690V</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Baris Bawah: Terminal Utama Bawah (2/T1, 4/T2, 6/T3) + Aux Bawah (14 NO, 22 NC) + Koil A2 -->
+          <div class="sn21-term-tier bottom-tier">
+            <div class="sn21-main-group">
+              <div class="sn21-slot">
+                <div class="terminal" data-id="K2_T1"></div>
+                <div class="term-label">2/T1</div>
+              </div>
+              <div class="sn21-slot">
+                <div class="terminal" data-id="K2_T2"></div>
+                <div class="term-label">4/T2</div>
+              </div>
+              <div class="sn21-slot">
+                <div class="terminal" data-id="K2_T3"></div>
+                <div class="term-label">6/T3</div>
+              </div>
+            </div>
+            <div class="sn21-aux-group">
+              <div class="sn21-slot aux-slot">
+                <div class="terminal dummy-term" title="Kontak Bantu 14 (NO) Mitsubishi SN-21" style="opacity:0.78;pointer-events:none"></div>
+                <div class="term-label">14<small>NO</small></div>
+              </div>
+              <div class="sn21-slot aux-slot">
+                <div class="terminal dummy-term" title="Kontak Bantu 22 (NC) Mitsubishi SN-21" style="opacity:0.78;pointer-events:none"></div>
+                <div class="term-label">22<small>NC</small></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sn21-coil-bottom-bar">
+            <span class="sn21-aux-caption">MAIN 3P + AUX 1NO1NC</span>
+            <div class="sn21-coil-term">
               <div class="terminal" data-id="K2_A2"></div>
-            </div>
-          </div>
-          <div
-            style="
-              font-size: 7.5px;
-              font-family: &quot;Fira Code&quot;, monospace;
-              color: var(--accent-teal);
-              text-align: center;
-            "
-          >
-            MAIN CONTACTS
-          </div>
-          <div
-            style="
-              display: flex;
-              justify-content: space-around;
-              background: #16181f;
-              padding: 3px;
-              border-radius: 4px;
-            "
-          >
-            <div style="text-align: center">
-              <div class="term-label">L1</div>
-              <div class="terminal" data-id="K2_L1"></div>
-            </div>
-            <div style="text-align: center">
-              <div class="term-label">L2</div>
-              <div class="terminal" data-id="K2_L2"></div>
-            </div>
-            <div style="text-align: center">
-              <div class="term-label">L3</div>
-              <div class="terminal" data-id="K2_L3"></div>
-            </div>
-          </div>
-          <div
-            style="
-              display: flex;
-              justify-content: space-around;
-              background: #16181f;
-              padding: 3px;
-              border-radius: 4px;
-            "
-          >
-            <div style="text-align: center">
-              <div class="term-label">T1</div>
-              <div class="terminal" data-id="K2_T1"></div>
-            </div>
-            <div style="text-align: center">
-              <div class="term-label">T2</div>
-              <div class="terminal" data-id="K2_T2"></div>
-            </div>
-            <div style="text-align: center">
-              <div class="term-label">T3</div>
-              <div class="terminal" data-id="K2_T3"></div>
+              <span class="term-label" style="color: #0284c7">A2</span>
             </div>
           </div>
         </div>
@@ -3067,7 +4612,7 @@
           MCB_IN:"MCB 1P — input fasa", MCB_OUT:"MCB 1P — output fasa", MCBN_IN:"MCB Netral — input N", MCBN_OUT:"MCB Netral — output N",
           MCB3_IN_L1:"MCB 3P — input R (L1)", MCB3_IN_L2:"MCB 3P — input S (L2)", MCB3_IN_L3:"MCB 3P — input T (L3)",
           MCB3_OUT_L1:"MCB 3P — output R (L1)", MCB3_OUT_L2:"MCB 3P — output S (L2)", MCB3_OUT_L3:"MCB 3P — output T (L3)",
-          PSU_AC_L:"PSU 24V — input AC L", PSU_AC_N:"PSU 24V — input AC N", "PSU_+V":"PSU — +24V DC", "PSU_-V":"PSU — 0V (-V) DC",
+          PSU_AC_L:"PSU 12V — input AC L", PSU_AC_N:"PSU 12V — input AC N", "PSU_+V":"PSU — +12V DC", "PSU_-V":"PSU — 0V (-V) DC",
           PLC_L1:"PLC CP1E — suplai AC L1", PLC_L2N:"PLC CP1E — suplai AC L2/N", PLC_IN_COM:"PLC — COM Input",
           PLC_IN_00:"PLC Input 00 (Stop)", PLC_IN_01:"PLC Input 01 (Start/Fwd)", PLC_IN_02:"PLC Input 02 (Rev/Jog)",
           PLC_OUT_COM0:"PLC — COM0 Output", PLC_OUT_COM1:"PLC — COM1 Output", PLC_OUT_COM2:"PLC — COM2 Output", PLC_OUT_COM3:"PLC — COM3 Output",
@@ -3880,28 +5425,94 @@ END`,
         applyTransform(true);
       }
 
+      function getVisibleWorkbenchBounds() {
+        const visibleEls = Array.from(
+          stage.querySelectorAll(".component:not(.palette-hidden), #busbar-pln")
+        );
+        if (!visibleEls.length) {
+          return { minX: 0, minY: 0, maxX: 1420, maxY: 880, width: 1420, height: 880 };
+        }
+        let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+        visibleEls.forEach((el) => {
+          const x = parseFloat(el.style.left) || el.offsetLeft || 0;
+          const y = parseFloat(el.style.top) || el.offsetTop || 0;
+          const w = el.offsetWidth || 100;
+          const h = el.offsetHeight || 100;
+          // Busbar PLN memiliki lebar 1380px; untuk perhitungan fokus komponen utama, batasi efek lebar busbar
+          // jika motor di sisi kanan sedang disembunyikan (mode Kontrol Saja) agar tampilan HP lebih besar & jelas.
+          const effectiveRight = el.id === "busbar-pln" ? Math.min(x + w, 1380) : x + w;
+          if (x < minX) minX = x;
+          if (y < minY) minY = y;
+          if (effectiveRight > maxX) maxX = effectiveRight;
+          if (y + h > maxY) maxY = y + h;
+        });
+        // Jika seluruh komponen aktif (selain busbar) berada di kiri (misal < 1370px), sesuaikan batas kanan
+        const nonBusMaxX = visibleEls
+          .filter((el) => el.id !== "busbar-pln")
+          .reduce((acc, el) => {
+            const x = parseFloat(el.style.left) || el.offsetLeft || 0;
+            return Math.max(acc, x + (el.offsetWidth || 100));
+          }, 0);
+        if (nonBusMaxX > 400) maxX = Math.max(nonBusMaxX + 20, 1380);
+        const pad = 16;
+        minX = Math.max(0, minX - pad);
+        minY = Math.max(0, minY - pad);
+        maxX = maxX + pad;
+        maxY = maxY + pad;
+        return {
+          minX,
+          minY,
+          maxX,
+          maxY,
+          width: Math.max(320, maxX - minX),
+          height: Math.max(320, maxY - minY),
+        };
+      }
+
       function resetZoomPan() {
-        const vW = viewport.clientWidth;
-        const vH = viewport.clientHeight;
-        const baseW = 1420;
-        const baseH = 880;
-        const portraitSmall = window.matchMedia("(max-width: 760px) and (orientation: portrait)").matches;
-        // Portrait: fit the workbench width first; user can pinch/scroll to inspect details.
-        scale = (portraitSmall ? vW / baseW : Math.min(vW / baseW, vH / baseH)) * (portraitSmall ? 0.96 : 0.92);
-        scale = Math.min(2.8, Math.max(0.2, scale));
-        panX = (vW - baseW * scale) / 2;
-        panY = portraitSmall ? 10 : (vH - baseH * scale) / 2;
+        const rect = viewport.getBoundingClientRect();
+        const vW = rect.width || viewport.clientWidth || window.innerWidth;
+        const vH = rect.height || viewport.clientHeight || (window.innerHeight - 50);
+        if (vW <= 0 || vH <= 0) return;
+
+        const bounds = getVisibleWorkbenchBounds();
+        const isPortraitMobile = window.matchMedia("(max-width: 820px) and (orientation: portrait)").matches;
+        const isLandscapeMobile = window.matchMedia("(max-width: 960px) and (orientation: landscape)").matches;
+
+        let targetScale;
+        if (isPortraitMobile) {
+          // Di HP mode tegak (portrait), prioritaskan memenuhi lebar layar agar komponen jelas dan proporsional
+          targetScale = (vW / bounds.width) * 0.97;
+        } else if (isLandscapeMobile) {
+          // Di HP mode mendatar (landscape), sesuaikan dengan lebar & tinggi area viewport yang tersedia
+          targetScale = Math.min(vW / bounds.width, vH / bounds.height) * 0.96;
+        } else {
+          targetScale = Math.min(vW / bounds.width, vH / bounds.height) * 0.94;
+        }
+
+        scale = Math.min(2.8, Math.max(0.18, targetScale));
+        panX = Math.round((vW - bounds.width * scale) / 2 - bounds.minX * scale);
+        panY = isPortraitMobile
+          ? Math.max(8, Math.round((vH - bounds.height * scale) * 0.18 - bounds.minY * scale))
+          : Math.round((vH - bounds.height * scale) / 2 - bounds.minY * scale);
         applyTransform(true);
       }
 
       let resizeTimer = null;
-      window.addEventListener("resize", () => {
+      function scheduleRefitZoom() {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
-          // Refit on orientation/viewport changes so portrait and landscape both use the available area.
           resetZoomPan();
-        }, 100);
+        }, 120);
+      }
+      window.addEventListener("resize", scheduleRefitZoom);
+      window.addEventListener("orientationchange", () => {
+        setTimeout(resetZoomPan, 180);
+        setTimeout(resetZoomPan, 420);
       });
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", scheduleRefitZoom);
+      }
 
       /* v40: mouse-wheel zoom, pinch zoom, dan pan multi-perangkat. */
       function pointerDistance(a, b) {
@@ -4805,6 +6416,12 @@ END`,
 
         document.getElementById("led-pwr").className =
           "led" + (plcPowered ? " active-pwr" : "");
+        const ledRunEl = document.getElementById("led-run");
+        if (ledRunEl) ledRunEl.className = "led" + (plcPowered ? " active-pwr" : "");
+        const ledErrEl = document.getElementById("led-err");
+        if (ledErrEl) ledErrEl.className = "led" + (isMcbTripped ? " active-err" : "");
+        const psuLedEl = document.getElementById("psu-led-ok");
+        if (psuLedEl) psuLedEl.classList.toggle("off", !psuActive);
 
         const comToMinus =
           psuActive && areNodesConnected("PLC_IN_COM", "PSU_-V");
@@ -5023,9 +6640,30 @@ END`,
         document.getElementById("diag-modal").style.display = "none";
       }
 
+      const LOCAL_THEME_KEY = "plc-wiring-simulator-v43-theme";
+      function applyThemeMode(isDark) {
+        document.body.classList.toggle("dark-mode", !!isDark);
+        const btn = document.getElementById("btn-theme-toggle");
+        if (btn) {
+          btn.textContent = isDark ? "☀️ Terang" : "🌙 Gelap";
+          btn.title = isDark ? "Beralih ke Mode Terang" : "Beralih ke Mode Gelap";
+        }
+      }
+      function toggleThemeMode() {
+        const nextDark = !document.body.classList.contains("dark-mode");
+        applyThemeMode(nextDark);
+        try { localStorage.setItem(LOCAL_THEME_KEY, nextDark ? "dark" : "light"); } catch (_) {}
+        showToast(nextDark ? "Mode Gelap diaktifkan." : "Mode Terang diaktifkan.");
+      }
+
       window.addEventListener("load", () => {
-        resetZoomPan();
+        try {
+          const savedTheme = localStorage.getItem(LOCAL_THEME_KEY);
+          if (savedTheme === "dark") applyThemeMode(true);
+        } catch (_) {}
         loadPresetProgram();
+        resetZoomPan();
+        requestAnimationFrame(() => resetZoomPan());
         installTerminalTooltips();
         installComponentDragging();
         let restored = false;
