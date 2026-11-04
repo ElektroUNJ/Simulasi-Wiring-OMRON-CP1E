@@ -422,7 +422,7 @@
         top: 0;
         left: 0;
         width: 1420px;
-        height: 880px;
+        height: 1120px;
         z-index: 10;
         pointer-events: none;
       }
@@ -818,6 +818,21 @@
         height: 180px;
         padding: 8px;
       }
+      #buttons-panel.sd-five-buttons {
+        width: 342px;
+        padding: 6px 6px;
+      }
+      #buttons-panel.sd-five-buttons .push-btn {
+        width: 38px;
+        height: 38px;
+        margin-bottom: 4px;
+      }
+      .sd-extra-pb {
+        display: none;
+      }
+      #buttons-panel.sd-five-buttons .sd-extra-pb {
+        display: block;
+      }
       .push-btn {
         width: 44px;
         height: 44px;
@@ -841,6 +856,12 @@
       .btn-yellow {
         background: #f1c40f;
       }
+      .btn-blue {
+        background: #0ea5e9;
+      }
+      .btn-orange {
+        background: #f97316;
+      }
 
       /* PILOT LAMPS */
       #lamp-panel {
@@ -849,6 +870,10 @@
         width: 280px;
         height: 180px;
         padding: 8px;
+      }
+      #lamp-panel.sd-lamp-shift {
+        left: 1126px;
+        width: 274px;
       }
       .pilot-lamp {
         width: 36px;
@@ -883,7 +908,7 @@
         align-items: center;
       }
 
-      /* KONTAKTOR K1 & K2 (3-POLE) */
+      /* KONTAKTOR K1, K2, K3 & K4 (3-POLE) */
       .contactor-comp {
         width: 140px;
         height: 270px;
@@ -898,6 +923,14 @@
       }
       #contactor-k2 {
         left: 925px;
+        top: 275px;
+      }
+      #contactor-k3 {
+        left: 1075px;
+        top: 275px;
+      }
+      #contactor-k4 {
+        left: 1225px;
         top: 275px;
       }
 
@@ -992,6 +1025,33 @@
       #motor-m1 {
         left: 1090px;
         top: 275px;
+      }
+      #motor-m1.sd-motor-pos {
+        left: 1075px;
+        top: 552px;
+        width: 294px;
+        height: 295px;
+      }
+      .sd-motor-terms {
+        display: none;
+      }
+      #motor-m1.sd-motor-pos .sd-motor-terms {
+        display: flex;
+      }
+      .sd-motor-badge {
+        display: none;
+        font-family: "Fira Code", monospace;
+        font-size: 8.5px;
+        font-weight: 800;
+        padding: 2px 8px;
+        border-radius: 999px;
+        border: 1px solid #334155;
+        background: #0f172a;
+        color: #94a3b8;
+        letter-spacing: 0.3px;
+      }
+      #motor-m1.sd-motor-pos .sd-motor-badge {
+        display: inline-block;
       }
       #motor-m2 {
         left: 1090px;
@@ -1101,14 +1161,24 @@
         }
       }
       .motor-rotor.spinning-cw {
-        animation: spinCW 0.6s linear infinite;
+        animation: spinCW 0.55s linear infinite;
         border-color: var(--accent-green);
         filter: drop-shadow(0 0 6px var(--accent-green));
       }
+      .motor-rotor.spinning-cw-star {
+        animation: spinCW 1.15s linear infinite;
+        border-color: #38bdf8;
+        filter: drop-shadow(0 0 6px #38bdf8);
+      }
       .motor-rotor.spinning-ccw {
-        animation: spinCCW 0.6s linear infinite;
+        animation: spinCCW 0.55s linear infinite;
         border-color: var(--accent-amber);
         filter: drop-shadow(0 0 6px var(--accent-amber));
+      }
+      .motor-rotor.spinning-ccw-star {
+        animation: spinCCW 1.15s linear infinite;
+        border-color: #facc15;
+        filter: drop-shadow(0 0 6px #facc15);
       }
 
       /* MODALS */
@@ -2405,7 +2475,9 @@
 
       /* V39: tampilan industrial kontaktor dan TOR dengan label terminal kontras. */
       #contactor-k1,
-      #contactor-k2 {
+      #contactor-k2,
+      #contactor-k3,
+      #contactor-k4 {
         background: linear-gradient(
           145deg,
           #f7f9fb 0%,
@@ -2419,6 +2491,8 @@
       }
       #contactor-k1 .comp-header,
       #contactor-k2 .comp-header,
+      #contactor-k3 .comp-header,
+      #contactor-k4 .comp-header,
       #tor-1 .comp-header,
       #tor-2 .comp-header {
         background: linear-gradient(180deg, #e8eef3, #cbd5df) !important;
@@ -2427,6 +2501,8 @@
       }
       #contactor-k1 > div[style*="background: #16181f"],
       #contactor-k2 > div[style*="background: #16181f"],
+      #contactor-k3 > div[style*="background: #16181f"],
+      #contactor-k4 > div[style*="background: #16181f"],
       #tor-1 > div[style*="background: #16181f"],
       #tor-2 > div[style*="background: #16181f"] {
         background: linear-gradient(180deg, #e7edf2, #d1dae2) !important;
@@ -2434,10 +2510,14 @@
       }
       #contactor-k1 .term-label,
       #contactor-k2 .term-label,
+      #contactor-k3 .term-label,
+      #contactor-k4 .term-label,
       #tor-1 .term-label,
       #tor-2 .term-label,
       #contactor-k1 span,
       #contactor-k2 span,
+      #contactor-k3 span,
+      #contactor-k4 span,
       #tor-1 div[style*="font-size: 7px"],
       #tor-2 div[style*="font-size: 7px"] {
         color: #20364a !important;
@@ -2446,13 +2526,17 @@
         letter-spacing: 0.15px;
       }
       #contactor-k1 .plunger-window,
-      #contactor-k2 .plunger-window {
+      #contactor-k2 .plunger-window,
+      #contactor-k3 .plunger-window,
+      #contactor-k4 .plunger-window {
         background: linear-gradient(180deg, #343d46, #20272e) !important;
         border: 1px solid #687582 !important;
         box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.35) !important;
       }
       #contactor-k1 .plunger-window span,
-      #contactor-k2 .plunger-window span {
+      #contactor-k2 .plunger-window span,
+      #contactor-k3 .plunger-window span,
+      #contactor-k4 .plunger-window span {
         color: #f8fafc !important;
       }
       #tor-1,
@@ -2479,6 +2563,8 @@
       }
       #contactor-k1 .terminal,
       #contactor-k2 .terminal,
+      #contactor-k3 .terminal,
+      #contactor-k4 .terminal,
       #tor-1 .terminal,
       #tor-2 .terminal {
         position: relative;
@@ -2492,6 +2578,8 @@
       }
       #contactor-k1 .terminal::after,
       #contactor-k2 .terminal::after,
+      #contactor-k3 .terminal::after,
+      #contactor-k4 .terminal::after,
       #tor-1 .terminal::after,
       #tor-2 .terminal::after {
         background: #344150 !important;
@@ -3827,7 +3915,9 @@
 
       /* 5. KONTAKTOR MAGNETIK: MITSUBISHI ELECTRIC SN-21 (INDUSTRIAL BEIGE) */
       #contactor-k1.sn21-contactor,
-      #contactor-k2.sn21-contactor {
+      #contactor-k2.sn21-contactor,
+      #contactor-k3.sn21-contactor,
+      #contactor-k4.sn21-contactor {
         width: 144px;
         height: 270px;
         padding: 5px 6px !important;
@@ -3848,7 +3938,9 @@
         justify-content: space-between;
       }
       #contactor-k1.sn21-contactor .comp-header,
-      #contactor-k2.sn21-contactor .comp-header {
+      #contactor-k2.sn21-contactor .comp-header,
+      #contactor-k3.sn21-contactor .comp-header,
+      #contactor-k4.sn21-contactor .comp-header {
         background: linear-gradient(
           180deg,
           #e6e1d3 0%,
@@ -3986,7 +4078,9 @@
         border: 1px solid #a8a08e;
       }
       #contactor-k1.sn21-contactor .plunger-window,
-      #contactor-k2.sn21-contactor .plunger-window {
+      #contactor-k2.sn21-contactor .plunger-window,
+      #contactor-k3.sn21-contactor .plunger-window,
+      #contactor-k4.sn21-contactor .plunger-window {
         background: linear-gradient(
           180deg,
           #27272a 0%,
@@ -4016,7 +4110,9 @@
       }
       /* Inti Plunger Mekanis (Biru Tua / Oranye Gelap yang Tenggelam saat Energized) */
       #contactor-k1.sn21-contactor .plunger,
-      #contactor-k2.sn21-contactor .plunger {
+      #contactor-k2.sn21-contactor .plunger,
+      #contactor-k3.sn21-contactor .plunger,
+      #contactor-k4.sn21-contactor .plunger {
         width: 24px;
         height: 15px;
         background: linear-gradient(
@@ -4033,7 +4129,9 @@
         transition: all 0.14s ease;
       }
       #contactor-k1.sn21-contactor .plunger.engaged,
-      #contactor-k2.sn21-contactor .plunger.engaged {
+      #contactor-k2.sn21-contactor .plunger.engaged,
+      #contactor-k3.sn21-contactor .plunger.engaged,
+      #contactor-k4.sn21-contactor .plunger.engaged {
         background: linear-gradient(
           180deg,
           #1d4ed8 0%,
@@ -4500,6 +4598,12 @@
                 <option value="JOGGING_MOTOR">
                   3B. Inching / Jogging — Kontrol + Motor
                 </option>
+                <option value="STAR_DELTA_REV_CONTROL">
+                  4A. Bintang-Segitiga 2 Arah (Kanan/Kiri) — Kontrol Saja
+                </option>
+                <option value="STAR_DELTA_REV_MOTOR">
+                  4B. Bintang-Segitiga 2 Arah (Kanan/Kiri) — Kontrol + Motor
+                </option>
               </select>
             </div>
 
@@ -4572,6 +4676,24 @@
             >
               📙 Jogging — Motor
             </button>
+            <button
+              class="menu-item"
+              onclick="
+                openPresetWiringGuide('STAR_DELTA_REV_CONTROL');
+                closeMoreMenu();
+              "
+            >
+              📕 Bintang-Segitiga 2 Arah — Kontrol
+            </button>
+            <button
+              class="menu-item"
+              onclick="
+                openPresetWiringGuide('STAR_DELTA_REV_MOTOR');
+                closeMoreMenu();
+              "
+            >
+              📕 Bintang-Segitiga 2 Arah — Motor
+            </button>
 
             <div class="menu-divider"></div>
             <div class="menu-select-wrap">
@@ -4605,6 +4727,20 @@
                 onclick="toggleComponent('contactor-k2')"
               >
                 ＋ Kontaktor K2
+              </button>
+              <button
+                class="menu-item"
+                data-component="contactor-k3"
+                onclick="toggleComponent('contactor-k3')"
+              >
+                ＋ Kontaktor K3
+              </button>
+              <button
+                class="menu-item"
+                data-component="contactor-k4"
+                onclick="toggleComponent('contactor-k4')"
+              >
+                ＋ Kontaktor K4
               </button>
               <button
                 class="menu-item"
@@ -5331,7 +5467,7 @@
 
         <!-- PUSH BUTTONS -->
         <div class="component" id="buttons-panel">
-          <div class="comp-header">
+          <div class="comp-header" id="buttons-panel-header">
             PUSH BUTTON · TOMBOL PERINTAH (TEKAN / TAHAN)
           </div>
           <div
@@ -5344,15 +5480,18 @@
           >
             <div style="text-align: center">
               <div class="push-btn btn-red" id="pb-stop"></div>
-              <div style="display: flex; gap: 6px; justify-content: center">
+              <div style="display: flex; gap: 4px; justify-content: center">
                 <div class="terminal" data-id="PB0_T1"></div>
                 <div class="terminal" data-id="PB0_T2"></div>
               </div>
               <span
+                id="pb0-label"
                 style="
-                  font-size: 8.5px;
+                  font-size: 8px;
                   font-family: &quot;Fira Code&quot;, monospace;
                   color: #e74c3c;
+                  display: block;
+                  line-height: 1.15;
                 "
                 >STOP (00)</span
               >
@@ -5360,15 +5499,18 @@
 
             <div style="text-align: center">
               <div class="push-btn btn-green" id="pb-fwd"></div>
-              <div style="display: flex; gap: 6px; justify-content: center">
+              <div style="display: flex; gap: 4px; justify-content: center">
                 <div class="terminal" data-id="PB1_T1"></div>
                 <div class="terminal" data-id="PB1_T2"></div>
               </div>
               <span
+                id="pb1-label"
                 style="
-                  font-size: 8.5px;
+                  font-size: 8px;
                   font-family: &quot;Fira Code&quot;, monospace;
                   color: #2ecc71;
+                  display: block;
+                  line-height: 1.15;
                 "
                 >START FWD (01)</span
               >
@@ -5376,17 +5518,58 @@
 
             <div style="text-align: center">
               <div class="push-btn btn-yellow" id="pb-rev"></div>
-              <div style="display: flex; gap: 6px; justify-content: center">
+              <div style="display: flex; gap: 4px; justify-content: center">
                 <div class="terminal" data-id="PB2_T1"></div>
                 <div class="terminal" data-id="PB2_T2"></div>
               </div>
               <span
+                id="pb2-label"
                 style="
-                  font-size: 8.5px;
+                  font-size: 8px;
                   font-family: &quot;Fira Code&quot;, monospace;
                   color: #f1c40f;
+                  display: block;
+                  line-height: 1.15;
                 "
                 >START REV (02)</span
+              >
+            </div>
+
+            <div class="sd-extra-pb" style="text-align: center">
+              <div class="push-btn btn-orange" id="pb-on4"></div>
+              <div style="display: flex; gap: 4px; justify-content: center">
+                <div class="terminal" data-id="PB3_T1"></div>
+                <div class="terminal" data-id="PB3_T2"></div>
+              </div>
+              <span
+                id="pb3-label"
+                style="
+                  font-size: 7.5px;
+                  font-family: &quot;Fira Code&quot;, monospace;
+                  color: #f97316;
+                  display: block;
+                  line-height: 1.15;
+                "
+                >ON-4 ΔKR (03)</span
+              >
+            </div>
+
+            <div class="sd-extra-pb" style="text-align: center">
+              <div class="push-btn btn-red" id="pb-off"></div>
+              <div style="display: flex; gap: 4px; justify-content: center">
+                <div class="terminal" data-id="PB4_T1"></div>
+                <div class="terminal" data-id="PB4_T2"></div>
+              </div>
+              <span
+                id="pb4-label"
+                style="
+                  font-size: 7.5px;
+                  font-family: &quot;Fira Code&quot;, monospace;
+                  color: #ef4444;
+                  display: block;
+                  line-height: 1.15;
+                "
+                >OFF STOP (04)</span
               >
             </div>
           </div>
@@ -5699,6 +5882,250 @@
           </div>
         </div>
 
+        <!-- KONTAKTOR K3: MITSUBISHI ELECTRIC SN-21 (SEGITIGA / DELTA Δ) -->
+        <div
+          class="component contactor-comp sn21-contactor palette-hidden"
+          id="contactor-k3"
+        >
+          <div class="comp-header">KONTAKTOR K3 · SN-21 (Δ)</div>
+
+          <div class="sn21-coil-top-bar">
+            <span class="sn21-coil-spec">Coil: 220-240V 50Hz</span>
+            <div class="sn21-coil-term">
+              <span class="term-label" style="color: #dc2626">A1</span>
+              <div class="terminal" data-id="K3_A1"></div>
+            </div>
+          </div>
+
+          <div class="sn21-term-tier top-tier">
+            <div class="sn21-main-group">
+              <div class="sn21-slot">
+                <div class="term-label">1/L1</div>
+                <div class="terminal" data-id="K3_L1"></div>
+              </div>
+              <div class="sn21-slot">
+                <div class="term-label">3/L2</div>
+                <div class="terminal" data-id="K3_L2"></div>
+              </div>
+              <div class="sn21-slot">
+                <div class="term-label">5/L3</div>
+                <div class="terminal" data-id="K3_L3"></div>
+              </div>
+            </div>
+            <div class="sn21-aux-group">
+              <div class="sn21-slot aux-slot">
+                <div class="term-label">13<small>NO</small></div>
+                <div
+                  class="terminal dummy-term"
+                  title="Kontak Bantu 13 (NO) Mitsubishi SN-21"
+                  style="opacity: 0.78; pointer-events: none"
+                ></div>
+              </div>
+              <div class="sn21-slot aux-slot">
+                <div class="term-label">21<small>NC</small></div>
+                <div
+                  class="terminal dummy-term"
+                  title="Kontak Bantu 21 (NC) Mitsubishi SN-21"
+                  style="opacity: 0.78; pointer-events: none"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sn21-center-bridge">
+            <div class="sn21-nameplate">
+              <div class="mitsubishi-brand">
+                <svg
+                  class="mitsubishi-diamonds"
+                  viewBox="0 0 24 21"
+                  aria-hidden="true"
+                >
+                  <polygon points="12,0 16,7 12,14 8,7" fill="#e11d48" />
+                  <polygon points="12,14 20,14 24,21 16,21" fill="#e11d48" />
+                  <polygon points="12,14 4,14 0,21 8,21" fill="#e11d48" />
+                </svg>
+                <span class="mitsubishi-text">MITSUBISHI</span>
+              </div>
+              <span class="sn21-model-badge">S-N21</span>
+            </div>
+
+            <div class="plunger-window">
+              <div class="plunger-recess">
+                <div class="plunger" id="plunger-k3"></div>
+              </div>
+              <div class="sn21-ratings-col">
+                <span class="sn21-ac3-rating">AC-3 5.5kW 22A</span>
+                <span class="sn21-ith-rating">Ith 32A · UI 690V</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="sn21-term-tier bottom-tier">
+            <div class="sn21-main-group">
+              <div class="sn21-slot">
+                <div class="terminal" data-id="K3_T1"></div>
+                <div class="term-label">2/T1</div>
+              </div>
+              <div class="sn21-slot">
+                <div class="terminal" data-id="K3_T2"></div>
+                <div class="term-label">4/T2</div>
+              </div>
+              <div class="sn21-slot">
+                <div class="terminal" data-id="K3_T3"></div>
+                <div class="term-label">6/T3</div>
+              </div>
+            </div>
+            <div class="sn21-aux-group">
+              <div class="sn21-slot aux-slot">
+                <div
+                  class="terminal dummy-term"
+                  title="Kontak Bantu 14 (NO) Mitsubishi SN-21"
+                  style="opacity: 0.78; pointer-events: none"
+                ></div>
+                <div class="term-label">14<small>NO</small></div>
+              </div>
+              <div class="sn21-slot aux-slot">
+                <div
+                  class="terminal dummy-term"
+                  title="Kontak Bantu 22 (NC) Mitsubishi SN-21"
+                  style="opacity: 0.78; pointer-events: none"
+                ></div>
+                <div class="term-label">22<small>NC</small></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sn21-coil-bottom-bar">
+            <span class="sn21-aux-caption">MAIN 3P + AUX 1NO1NC</span>
+            <div class="sn21-coil-term">
+              <div class="terminal" data-id="K3_A2"></div>
+              <span class="term-label" style="color: #0284c7">A2</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- KONTAKTOR K4: MITSUBISHI ELECTRIC SN-21 (PUTAR KIRI / REVERSE) -->
+        <div
+          class="component contactor-comp sn21-contactor palette-hidden"
+          id="contactor-k4"
+        >
+          <div class="comp-header">KONTAKTOR K4 · SN-21 (KIRI)</div>
+
+          <div class="sn21-coil-top-bar">
+            <span class="sn21-coil-spec">Coil: 220-240V 50Hz</span>
+            <div class="sn21-coil-term">
+              <span class="term-label" style="color: #dc2626">A1</span>
+              <div class="terminal" data-id="K4_A1"></div>
+            </div>
+          </div>
+
+          <div class="sn21-term-tier top-tier">
+            <div class="sn21-main-group">
+              <div class="sn21-slot">
+                <div class="term-label">1/L1</div>
+                <div class="terminal" data-id="K4_L1"></div>
+              </div>
+              <div class="sn21-slot">
+                <div class="term-label">3/L2</div>
+                <div class="terminal" data-id="K4_L2"></div>
+              </div>
+              <div class="sn21-slot">
+                <div class="term-label">5/L3</div>
+                <div class="terminal" data-id="K4_L3"></div>
+              </div>
+            </div>
+            <div class="sn21-aux-group">
+              <div class="sn21-slot aux-slot">
+                <div class="term-label">13<small>NO</small></div>
+                <div
+                  class="terminal dummy-term"
+                  title="Kontak Bantu 13 (NO) Mitsubishi SN-21"
+                  style="opacity: 0.78; pointer-events: none"
+                ></div>
+              </div>
+              <div class="sn21-slot aux-slot">
+                <div class="term-label">21<small>NC</small></div>
+                <div
+                  class="terminal dummy-term"
+                  title="Kontak Bantu 21 (NC) Mitsubishi SN-21"
+                  style="opacity: 0.78; pointer-events: none"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sn21-center-bridge">
+            <div class="sn21-nameplate">
+              <div class="mitsubishi-brand">
+                <svg
+                  class="mitsubishi-diamonds"
+                  viewBox="0 0 24 21"
+                  aria-hidden="true"
+                >
+                  <polygon points="12,0 16,7 12,14 8,7" fill="#e11d48" />
+                  <polygon points="12,14 20,14 24,21 16,21" fill="#e11d48" />
+                  <polygon points="12,14 4,14 0,21 8,21" fill="#e11d48" />
+                </svg>
+                <span class="mitsubishi-text">MITSUBISHI</span>
+              </div>
+              <span class="sn21-model-badge">S-N21</span>
+            </div>
+
+            <div class="plunger-window">
+              <div class="plunger-recess">
+                <div class="plunger" id="plunger-k4"></div>
+              </div>
+              <div class="sn21-ratings-col">
+                <span class="sn21-ac3-rating">AC-3 5.5kW 22A</span>
+                <span class="sn21-ith-rating">Ith 32A · UI 690V</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="sn21-term-tier bottom-tier">
+            <div class="sn21-main-group">
+              <div class="sn21-slot">
+                <div class="terminal" data-id="K4_T1"></div>
+                <div class="term-label">2/T1</div>
+              </div>
+              <div class="sn21-slot">
+                <div class="terminal" data-id="K4_T2"></div>
+                <div class="term-label">4/T2</div>
+              </div>
+              <div class="sn21-slot">
+                <div class="terminal" data-id="K4_T3"></div>
+                <div class="term-label">6/T3</div>
+              </div>
+            </div>
+            <div class="sn21-aux-group">
+              <div class="sn21-slot aux-slot">
+                <div
+                  class="terminal dummy-term"
+                  title="Kontak Bantu 14 (NO) Mitsubishi SN-21"
+                  style="opacity: 0.78; pointer-events: none"
+                ></div>
+                <div class="term-label">14<small>NO</small></div>
+              </div>
+              <div class="sn21-slot aux-slot">
+                <div
+                  class="terminal dummy-term"
+                  title="Kontak Bantu 22 (NC) Mitsubishi SN-21"
+                  style="opacity: 0.78; pointer-events: none"
+                ></div>
+                <div class="term-label">22<small>NC</small></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sn21-coil-bottom-bar">
+            <span class="sn21-aux-caption">MAIN 3P + AUX 1NO1NC</span>
+            <div class="sn21-coil-term">
+              <div class="terminal" data-id="K4_A2"></div>
+              <span class="term-label" style="color: #0284c7">A2</span>
+            </div>
+          </div>
+        </div>
+
         <!-- OVERLOAD TOR 1 -->
         <div class="component tor-comp" id="tor-1">
           <div class="comp-header">OVERLOAD TOR 1</div>
@@ -5881,9 +6308,11 @@
           </div>
         </div>
 
-        <!-- MOTOR 3-FASA M1 (FORWARD) -->
+        <!-- MOTOR 3-FASA M1 (FORWARD / STAR-DELTA) -->
         <div class="component motor-comp" id="motor-m1">
-          <div class="comp-header">MOTOR 3-FASA M1 (FORWARD)</div>
+          <div class="comp-header" id="motor-m1-header">
+            MOTOR 3-FASA M1 (FORWARD)
+          </div>
           <div class="motor-visual">
             <div class="motor-fins"></div>
             <div class="motor-foot"></div>
@@ -5899,26 +6328,52 @@
               >M1</span
             >
           </div>
+          <div class="sd-motor-badge" id="m1-sd-badge">STOP · MOTOR OFF</div>
           <div
             style="
               display: flex;
-              gap: 16px;
+              flex-direction: column;
+              gap: 4px;
               background: #16181f;
-              padding: 4px 16px;
+              padding: 4px 12px;
               border-radius: 4px;
             "
           >
-            <div style="text-align: center">
-              <div class="term-label">U1</div>
-              <div class="terminal" data-id="M1_U"></div>
+            <div style="display: flex; gap: 16px; justify-content: center">
+              <div style="text-align: center">
+                <div class="term-label">U1</div>
+                <div class="terminal" data-id="M1_U"></div>
+              </div>
+              <div style="text-align: center">
+                <div class="term-label">V1</div>
+                <div class="terminal" data-id="M1_V"></div>
+              </div>
+              <div style="text-align: center">
+                <div class="term-label">W1</div>
+                <div class="terminal" data-id="M1_W"></div>
+              </div>
             </div>
-            <div style="text-align: center">
-              <div class="term-label">V1</div>
-              <div class="terminal" data-id="M1_V"></div>
-            </div>
-            <div style="text-align: center">
-              <div class="term-label">W1</div>
-              <div class="terminal" data-id="M1_W"></div>
+            <div
+              class="sd-motor-terms"
+              style="
+                gap: 16px;
+                justify-content: center;
+                border-top: 1px dashed #334155;
+                padding-top: 3px;
+              "
+            >
+              <div style="text-align: center">
+                <div class="terminal" data-id="M1_U2"></div>
+                <div class="term-label">U2</div>
+              </div>
+              <div style="text-align: center">
+                <div class="terminal" data-id="M1_V2"></div>
+                <div class="term-label">V2</div>
+              </div>
+              <div style="text-align: center">
+                <div class="terminal" data-id="M1_W2"></div>
+                <div class="term-label">W2</div>
+              </div>
             </div>
           </div>
         </div>
@@ -6285,7 +6740,13 @@
       let isDeleteMode = false;
       let isAddPointMode = false;
       let isLiveTrace = false;
-      let buttonStates = { "00": false, "01": false, "02": false };
+      let buttonStates = {
+        "00": false,
+        "01": false,
+        "02": false,
+        "03": false,
+        "04": false,
+      };
       let isTor1Tripped = false;
       let isTor2Tripped = false;
 
@@ -6434,48 +6895,70 @@
           PLC_L1: "PLC CP1E — suplai AC L1",
           PLC_L2N: "PLC CP1E — suplai AC L2/N",
           PLC_IN_COM: "PLC — COM Input",
-          PLC_IN_00: "PLC Input 00 (Stop)",
-          PLC_IN_01: "PLC Input 01 (Start/Fwd)",
-          PLC_IN_02: "PLC Input 02 (Rev/Jog)",
+          PLC_IN_00: "PLC Input 00 (00000)",
+          PLC_IN_01: "PLC Input 01 (00001)",
+          PLC_IN_02: "PLC Input 02 (00002)",
+          PLC_IN_03: "PLC Input 03 (00003)",
+          PLC_IN_04: "PLC Input 04 (00004)",
           PLC_OUT_COM0: "PLC — COM0 Output",
           PLC_OUT_COM1: "PLC — COM1 Output",
           PLC_OUT_COM2: "PLC — COM2 Output",
           PLC_OUT_COM3: "PLC — COM3 Output",
-          PLC_OUT_00: "PLC Output 100.00",
-          PLC_OUT_01: "PLC Output 100.01",
-          PLC_OUT_02: "PLC Output 100.02",
-          PLC_OUT_03: "PLC Output 100.03",
-          PLC_OUT_04: "PLC Output 100.04",
-          PLC_OUT_05: "PLC Output 100.05",
-          PLC_OUT_06: "PLC Output 100.06",
-          PB0_T1: "PB STOP (00) — T1",
-          PB0_T2: "PB STOP (00) — T2",
-          PB1_T1: "PB START/FWD (01) — T1",
-          PB1_T2: "PB START/FWD (01) — T2",
-          PB2_T1: "PB REV/JOG (02) — T1",
-          PB2_T2: "PB REV/JOG (02) — T2",
-          LP_SBY_L: "Lampu Merah (Standby) — L",
-          LP_SBY_N: "Lampu Merah (Standby) — N",
-          LP_FWD_L: "Lampu Hijau (Fwd) — L",
-          LP_FWD_N: "Lampu Hijau (Fwd) — N",
-          LP_REV_L: "Lampu Kuning (Rev) — L",
-          LP_REV_N: "Lampu Kuning (Rev) — N",
-          K1_A1: "Kontaktor K1 — Koil A1",
-          K1_A2: "Kontaktor K1 — Koil A2",
+          PLC_OUT_00: "PLC Output 100.00 (01000)",
+          PLC_OUT_01: "PLC Output 100.01 (01001)",
+          PLC_OUT_02: "PLC Output 100.02 (01002)",
+          PLC_OUT_03: "PLC Output 100.03 (01003)",
+          PLC_OUT_04: "PLC Output 100.04 (01004)",
+          PLC_OUT_05: "PLC Output 100.05 (01005)",
+          PLC_OUT_06: "PLC Output 100.06 (01006)",
+          PB0_T1: "Push Button (00) — T1",
+          PB0_T2: "Push Button (00) — T2",
+          PB1_T1: "Push Button (01) — T1",
+          PB1_T2: "Push Button (01) — T2",
+          PB2_T1: "Push Button (02) — T1",
+          PB2_T2: "Push Button (02) — T2",
+          PB3_T1: "Push Button ON-4 (03) — T1",
+          PB3_T2: "Push Button ON-4 (03) — T2",
+          PB4_T1: "Push Button OFF (04) — T1",
+          PB4_T2: "Push Button OFF (04) — T2",
+          LP_SBY_L: "Lampu Merah (Standby / Motor Off) — L",
+          LP_SBY_N: "Lampu Merah (Standby / Motor Off) — N",
+          LP_FWD_L: "Lampu Hijau (Fwd / Bintang Y) — L",
+          LP_FWD_N: "Lampu Hijau (Fwd / Bintang Y) — N",
+          LP_REV_L: "Lampu Kuning (Rev / Segitiga Δ) — L",
+          LP_REV_N: "Lampu Kuning (Rev / Segitiga Δ) — N",
+          K1_A1: "Kontaktor K1 (Utama Kanan) — Koil A1",
+          K1_A2: "Kontaktor K1 (Utama Kanan) — Koil A2",
           K1_L1: "Kontaktor K1 — Kontak Utama L1",
           K1_L2: "Kontaktor K1 — Kontak Utama L2",
           K1_L3: "Kontaktor K1 — Kontak Utama L3",
           K1_T1: "Kontaktor K1 — Kontak Utama T1",
           K1_T2: "Kontaktor K1 — Kontak Utama T2",
           K1_T3: "Kontaktor K1 — Kontak Utama T3",
-          K2_A1: "Kontaktor K2 — Koil A1",
-          K2_A2: "Kontaktor K2 — Koil A2",
+          K2_A1: "Kontaktor K2 (Bintang Y / Reverse) — Koil A1",
+          K2_A2: "Kontaktor K2 (Bintang Y / Reverse) — Koil A2",
           K2_L1: "Kontaktor K2 — Kontak Utama L1",
           K2_L2: "Kontaktor K2 — Kontak Utama L2",
           K2_L3: "Kontaktor K2 — Kontak Utama L3",
           K2_T1: "Kontaktor K2 — Kontak Utama T1",
           K2_T2: "Kontaktor K2 — Kontak Utama T2",
           K2_T3: "Kontaktor K2 — Kontak Utama T3",
+          K3_A1: "Kontaktor K3 (Segitiga Δ) — Koil A1",
+          K3_A2: "Kontaktor K3 (Segitiga Δ) — Koil A2",
+          K3_L1: "Kontaktor K3 — Kontak Utama L1",
+          K3_L2: "Kontaktor K3 — Kontak Utama L2",
+          K3_L3: "Kontaktor K3 — Kontak Utama L3",
+          K3_T1: "Kontaktor K3 — Kontak Utama T1",
+          K3_T2: "Kontaktor K3 — Kontak Utama T2",
+          K3_T3: "Kontaktor K3 — Kontak Utama T3",
+          K4_A1: "Kontaktor K4 (Utama Kiri) — Koil A1",
+          K4_A2: "Kontaktor K4 (Utama Kiri) — Koil A2",
+          K4_L1: "Kontaktor K4 — Kontak Utama L1",
+          K4_L2: "Kontaktor K4 — Kontak Utama L2",
+          K4_L3: "Kontaktor K4 — Kontak Utama L3",
+          K4_T1: "Kontaktor K4 — Kontak Utama T1",
+          K4_T2: "Kontaktor K4 — Kontak Utama T2",
+          K4_T3: "Kontaktor K4 — Kontak Utama T3",
           TOR1_95: "TOR 1 — Kontak NC 95",
           TOR1_96: "TOR 1 — Kontak NC 96",
           TOR1_T1: "TOR 1 — Input Daya T1",
@@ -6495,6 +6978,9 @@
           M1_U: "Motor M1 — Terminal U1",
           M1_V: "Motor M1 — Terminal V1",
           M1_W: "Motor M1 — Terminal W1",
+          M1_U2: "Motor M1 — Terminal U2 (Bintang-Segitiga)",
+          M1_V2: "Motor M1 — Terminal V2 (Bintang-Segitiga)",
+          M1_W2: "Motor M1 — Terminal W2 (Bintang-Segitiga)",
           M2_U: "Motor M2 — Terminal U2",
           M2_V: "Motor M2 — Terminal V2",
           M2_W: "Motor M2 — Terminal W2",
@@ -6508,19 +6994,19 @@
       function describeWireCategory(fromId, toId) {
         const pair = `${fromId}|${toId}`;
         if (
-          /MCB3_|K[12]_(L|T)[123]|TOR[12]_(T[123]|U|V|W)|M[12]_[UVW]/.test(pair)
+          /MCB3_|K[1-4]_(L|T)[123]|TOR[12]_(T[123]|U|V|W)|M[12]_[UVW]/.test(pair)
         )
           return "RANGKAIAN DAYA MOTOR 3-FASA";
-        if (/PLN_NEUTRAL|MCBN_|PLC_L2N|K[12]_A2|LP_.*_N/.test(pair))
+        if (/PLN_NEUTRAL|MCBN_|PLC_L2N|K[1-4]_A2|LP_.*_N/.test(pair))
           return "JALUR NETRAL AC (N) & JUMPER LAMPU";
         if (/PLN_L1|MCB_IN|PSU_AC_L|PLC_L1/.test(pair))
           return "CATU DAYA FASA AC (220V)";
-        if (/PSU_-V|PB[012]_T2/.test(pair))
+        if (/PSU_-V|PB[0-4]_T2/.test(pair))
           return "JALUR MINUS (-V) PSU & JUMPER PUSH BUTTON";
-        if (/PSU_\+V|PLC_IN_|PB[012]_T1/.test(pair))
+        if (/PSU_\+V|PLC_IN_|PB[0-4]_T1/.test(pair))
           return "COM INPUT (+V) & INPUT DC 24V PLC";
         if (/PLC_OUT_COM/.test(pair)) return "COMMON OUTPUT RELAY PLC";
-        if (/TOR[12]_9[56]|K[12]_A1/.test(pair))
+        if (/TOR[12]_9[56]|K[1-4]_A1/.test(pair))
           return "KONTROL KOIL KONTAKTOR & OVERLOAD";
         if (/LP_/.test(pair)) return "INDIKATOR PILOT LAMP";
         return "SAMBUNGAN KONTROL";
@@ -6533,12 +7019,14 @@
           term.setAttribute("aria-label", describeTerminal(id));
         });
         [
-          ["pb-stop", "Push button STOP — tekan dan tahan"],
-          ["pb-fwd", "Push button FORWARD/START — tekan dan tahan"],
-          ["pb-rev", "Push button REVERSE/JOG — tekan dan tahan"],
-          ["lamp-standby", "Pilot lamp merah — indikator standby"],
-          ["lamp-fwd", "Pilot lamp hijau — indikator forward"],
-          ["lamp-rev", "Pilot lamp kuning — indikator reverse"],
+          ["pb-stop", "Push button (00) — tekan dan tahan"],
+          ["pb-fwd", "Push button (01) — tekan dan tahan"],
+          ["pb-rev", "Push button (02) — tekan dan tahan"],
+          ["pb-on4", "Push button ON-4 Segitiga Kiri (03) — tekan dan tahan"],
+          ["pb-off", "Push button OFF / Stop (04) — tekan dan tahan"],
+          ["lamp-standby", "Pilot lamp merah — indikator Standby / Motor Off"],
+          ["lamp-fwd", "Pilot lamp hijau — indikator Forward / Bintang (Y)"],
+          ["lamp-rev", "Pilot lamp kuning — indikator Reverse / Segitiga (Δ)"],
         ].forEach(([id, label]) => {
           const el = document.getElementById(id);
           if (el) {
@@ -6646,6 +7134,61 @@ LD NOT 100.01
 AND NOT 100.02
 OUT 100.00
 END`,
+        STAR_DELTA_REV: `// Jobsheet 4: Menjalankan Motor Listrik 3 Phasa Sistim Bintang-Segitiga
+// Secara Manual dengan 2 Arah Putar (Putar Kanan / Putar Kiri)
+// Input : 00000 (0.00)=ON-1 (Bintang Kanan), 00001 (0.01)=ON-2 (Segitiga Kanan)
+//         00002 (0.02)=ON-3 (Bintang Kiri),  00003 (0.03)=ON-4 (Segitiga Kiri)
+//         00004 (0.04)=OFF  (Berhenti)
+// Output: 01000 (100.00)=K1 (Utama Kanan), 01001 (100.01)=K2 (Bintang / Y)
+//         01002 (100.02)=K3 (Segitiga / Δ), 01003 (100.03)=K4 (Utama Kiri)
+//         01004 (100.04)=Lampu Motor Off
+// IR    : 01200 (12.00)=Bantu Bintang Kiri, 01201 (12.01)=Bantu Segitiga Kiri
+
+// Rung 1: Kontaktor Utama Putar Kanan (K1 = 01000)
+LD 00000
+OR 01000
+AND NOT 00004
+OUT 01000
+
+// Rung 2: Kontaktor Bintang / Star Y (K2 = 01001)
+LD 01000
+OR 01200
+AND NOT 00001
+AND NOT 01002
+OUT 01001
+
+// Rung 3: Kontaktor Segitiga / Delta Δ (K3 = 01002)
+LD 00001
+OR 01002
+OR 01201
+AND NOT 00000
+AND NOT 00004
+OUT 01002
+
+// Rung 4: Kontaktor Utama Putar Kiri (K4 = 01003)
+LD 00002
+OR 01003
+AND NOT 00004
+OUT 01003
+
+// Rung 5: Internal Relay Bintang Putar Kiri (01200)
+LD 01003
+AND NOT 00003
+AND NOT 01000
+OUT 01200
+
+// Rung 6: Internal Relay Segitiga Putar Kiri (01201)
+LD 00003
+OR 01002
+AND NOT 00002
+OUT 01201
+
+// Indikator Lampu Motor Off (01004 = menyala saat K1 & K4 mati)
+LD NOT 01000
+AND NOT 01003
+OUT 01004
+
+END`,
       };
 
       let activeMnemonicCode = PRESET_PROGRAMS.FWD_REV;
@@ -6695,6 +7238,117 @@ END`,
         document.getElementById("guide-modal").style.display = "flex";
       }
 
+      function buildStarDeltaLadderSvg() {
+        return `
+        <div class="guide-section" style="margin-top:12px">
+          <h4>2. Kalimat Kontrol (Sesuai Jobsheet)</h4>
+          <ol style="padding-left:20px;line-height:1.65;font-size:11px">
+            <li><b>ON-1 (00000) ditekan:</b> <b>K-1 (01000)</b> dan <b>K-2 (01001)</b> bekerja, motor terhubung <b>Bintang / Y (Putar Kanan)</b>.</li>
+            <li><b>ON-2 (00001) ditekan:</b> <b>K-2 (01001)</b> tidak bekerja, <b>K-1 (01000)</b> dan <b>K-3 (01002)</b> bekerja, motor terhubung <b>Segitiga / Δ (Putar Kanan)</b>.</li>
+            <li><b>OFF (00004) ditekan:</b> motor berhenti (seluruh kontaktor lepas, lampu <b>Motor Off</b> menyala).</li>
+            <li><b>ON-3 (00002) ditekan:</b> <b>K-4 (01003)</b> dan <b>K-2 (01001)</b> bekerja, motor terhubung <b>Bintang / Y (Putar Kiri)</b>.</li>
+            <li><b>ON-4 (00003) ditekan:</b> <b>K-2 (01001)</b> tidak bekerja, <b>K-4 (01003)</b> dan <b>K-3 (01002)</b> bekerja, motor terhubung <b>Segitiga / Δ (Putar Kiri)</b>.</li>
+          </ol>
+        </div>
+        <div class="guide-section" style="margin-top:12px">
+          <h4>3. Tabel Pengalamatan I/O PLC &amp; Internal Relay</h4>
+          <div style="overflow-x:auto">
+            <table style="width:100%;border-collapse:collapse;font-size:10.5px;font-family:'Fira Code',monospace">
+              <thead>
+                <tr style="background:rgba(8,145,178,0.15);text-align:left">
+                  <th style="padding:5px 7px;border:1px solid #94a3b8">Alamat Ladder</th>
+                  <th style="padding:5px 7px;border:1px solid #94a3b8">Terminal CP1E</th>
+                  <th style="padding:5px 7px;border:1px solid #94a3b8">Komponen</th>
+                  <th style="padding:5px 7px;border:1px solid #94a3b8">Fungsi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td style="padding:4px 7px;border:1px solid #cbd5e1"><b>00000</b> (0.00)</td><td style="padding:4px 7px;border:1px solid #cbd5e1">PLC_IN_00</td><td style="padding:4px 7px;border:1px solid #cbd5e1">PB ON-1</td><td style="padding:4px 7px;border:1px solid #cbd5e1">Start Bintang (Y) Putar Kanan</td></tr>
+                <tr><td style="padding:4px 7px;border:1px solid #cbd5e1"><b>00001</b> (0.01)</td><td style="padding:4px 7px;border:1px solid #cbd5e1">PLC_IN_01</td><td style="padding:4px 7px;border:1px solid #cbd5e1">PB ON-2</td><td style="padding:4px 7px;border:1px solid #cbd5e1">Pindah Segitiga (Δ) Putar Kanan</td></tr>
+                <tr><td style="padding:4px 7px;border:1px solid #cbd5e1"><b>00002</b> (0.02)</td><td style="padding:4px 7px;border:1px solid #cbd5e1">PLC_IN_02</td><td style="padding:4px 7px;border:1px solid #cbd5e1">PB ON-3</td><td style="padding:4px 7px;border:1px solid #cbd5e1">Start Bintang (Y) Putar Kiri</td></tr>
+                <tr><td style="padding:4px 7px;border:1px solid #cbd5e1"><b>00003</b> (0.03)</td><td style="padding:4px 7px;border:1px solid #cbd5e1">PLC_IN_03</td><td style="padding:4px 7px;border:1px solid #cbd5e1">PB ON-4</td><td style="padding:4px 7px;border:1px solid #cbd5e1">Pindah Segitiga (Δ) Putar Kiri</td></tr>
+                <tr><td style="padding:4px 7px;border:1px solid #cbd5e1"><b>00004</b> (0.04)</td><td style="padding:4px 7px;border:1px solid #cbd5e1">PLC_IN_04</td><td style="padding:4px 7px;border:1px solid #cbd5e1">PB OFF</td><td style="padding:4px 7px;border:1px solid #cbd5e1">Tombol Stop / Berhenti</td></tr>
+                <tr><td style="padding:4px 7px;border:1px solid #cbd5e1"><b>01000</b> (100.00)</td><td style="padding:4px 7px;border:1px solid #cbd5e1">PLC_OUT_00</td><td style="padding:4px 7px;border:1px solid #cbd5e1">Kontaktor K1</td><td style="padding:4px 7px;border:1px solid #cbd5e1">Kontaktor Utama Putar Kanan</td></tr>
+                <tr><td style="padding:4px 7px;border:1px solid #cbd5e1"><b>01001</b> (100.01)</td><td style="padding:4px 7px;border:1px solid #cbd5e1">PLC_OUT_01</td><td style="padding:4px 7px;border:1px solid #cbd5e1">Kontaktor K2 + Lampu Y</td><td style="padding:4px 7px;border:1px solid #cbd5e1">Hubung Bintang (Y)</td></tr>
+                <tr><td style="padding:4px 7px;border:1px solid #cbd5e1"><b>01002</b> (100.02)</td><td style="padding:4px 7px;border:1px solid #cbd5e1">PLC_OUT_02</td><td style="padding:4px 7px;border:1px solid #cbd5e1">Kontaktor K3 + Lampu Δ</td><td style="padding:4px 7px;border:1px solid #cbd5e1">Hubung Segitiga (Δ)</td></tr>
+                <tr><td style="padding:4px 7px;border:1px solid #cbd5e1"><b>01003</b> (100.03)</td><td style="padding:4px 7px;border:1px solid #cbd5e1">PLC_OUT_03</td><td style="padding:4px 7px;border:1px solid #cbd5e1">Kontaktor K4</td><td style="padding:4px 7px;border:1px solid #cbd5e1">Kontaktor Utama Putar Kiri</td></tr>
+                <tr><td style="padding:4px 7px;border:1px solid #cbd5e1"><b>01004</b> (100.04)</td><td style="padding:4px 7px;border:1px solid #cbd5e1">PLC_OUT_04</td><td style="padding:4px 7px;border:1px solid #cbd5e1">Lampu Motor Off</td><td style="padding:4px 7px;border:1px solid #cbd5e1">Indikator Standby / Motor Berhenti</td></tr>
+                <tr><td style="padding:4px 7px;border:1px solid #cbd5e1"><b>01200</b> (12.00)</td><td style="padding:4px 7px;border:1px solid #cbd5e1">Internal Relay</td><td style="padding:4px 7px;border:1px solid #cbd5e1">IR 01200</td><td style="padding:4px 7px;border:1px solid #cbd5e1">Pengunci Bantu Bintang Kiri</td></tr>
+                <tr><td style="padding:4px 7px;border:1px solid #cbd5e1"><b>01201</b> (12.01)</td><td style="padding:4px 7px;border:1px solid #cbd5e1">Internal Relay</td><td style="padding:4px 7px;border:1px solid #cbd5e1">IR 01201</td><td style="padding:4px 7px;border:1px solid #cbd5e1">Pengunci Bantu Segitiga Kiri</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="guide-section" style="margin-top:12px">
+          <h4>5. Ladder Diagram (Sesuai Jobsheet)</h4>
+          <div style="background:#ffffff;border:1px solid #94a3b8;border-radius:6px;padding:8px;overflow-x:auto">
+            <svg viewBox="0 0 520 510" style="width:100%;max-width:500px;display:block;margin:0 auto;font-family:'Fira Code',monospace;font-size:10px;fill:#0f172a;stroke:#0f172a" stroke-width="1.6">
+              <!-- Busbar kiri -->
+              <line x1="25" y1="15" x2="25" y2="495" stroke-width="2.2"/>
+              <!-- Rung 1: (00000 OR 01000) AND NOT 00004 -> 01000 -->
+              <line x1="25" y1="40" x2="80" y2="40"/><line x1="80" y1="28" x2="80" y2="52"/><line x1="92" y1="28" x2="92" y2="52"/><text x="86" y="23" text-anchor="middle" stroke="none">00000</text>
+              <line x1="92" y1="40" x2="190" y2="40"/>
+              <line x1="25" y1="80" x2="80" y2="80"/><line x1="80" y1="68" x2="80" y2="92"/><line x1="92" y1="68" x2="92" y2="92"/><text x="86" y="63" text-anchor="middle" stroke="none">01000</text>
+              <line x1="92" y1="80" x2="145" y2="80"/><line x1="145" y1="40" x2="145" y2="80"/>
+              <line x1="190" y1="28" x2="190" y2="52"/><line x1="202" y1="28" x2="202" y2="52"/><line x1="186" y1="50" x2="206" y2="30"/><text x="196" y="23" text-anchor="middle" stroke="none">00004</text>
+              <line x1="202" y1="40" x2="425" y2="40"/>
+              <path d="M432,30 A12,12 0 0,0 432,50" fill="none"/><path d="M448,30 A12,12 0 0,1 448,50" fill="none"/><text x="460" y="44" stroke="none">01000 (K1)</text>
+
+              <!-- Rung 2: (01000 OR 01200) AND NOT 00001 AND NOT 01002 -> 01001 -->
+              <line x1="25" y1="125" x2="80" y2="125"/><line x1="80" y1="113" x2="80" y2="137"/><line x1="92" y1="113" x2="92" y2="137"/><text x="86" y="108" text-anchor="middle" stroke="none">01000</text>
+              <line x1="92" y1="125" x2="190" y2="125"/>
+              <line x1="25" y1="165" x2="80" y2="165"/><line x1="80" y1="153" x2="80" y2="177"/><line x1="92" y1="153" x2="92" y2="177"/><text x="86" y="148" text-anchor="middle" stroke="none">01200</text>
+              <line x1="92" y1="165" x2="145" y2="165"/><line x1="145" y1="125" x2="145" y2="165"/>
+              <line x1="190" y1="113" x2="190" y2="137"/><line x1="202" y1="113" x2="202" y2="137"/><line x1="186" y1="135" x2="206" y2="115"/><text x="196" y="108" text-anchor="middle" stroke="none">00001</text>
+              <line x1="202" y1="125" x2="295" y2="125"/>
+              <line x1="295" y1="113" x2="295" y2="137"/><line x1="307" y1="113" x2="307" y2="137"/><line x1="291" y1="135" x2="311" y2="115"/><text x="301" y="108" text-anchor="middle" stroke="none">01002</text>
+              <line x1="307" y1="125" x2="425" y2="125"/>
+              <path d="M432,115 A12,12 0 0,0 432,135" fill="none"/><path d="M448,115 A12,12 0 0,1 448,135" fill="none"/><text x="460" y="129" stroke="none">01001 (K2)</text>
+
+              <!-- Rung 3: (00001 OR 01002 OR 01201) AND NOT 00000 AND NOT 00004 -> 01002 -->
+              <line x1="25" y1="210" x2="80" y2="210"/><line x1="80" y1="198" x2="80" y2="222"/><line x1="92" y1="198" x2="92" y2="222"/><text x="86" y="193" text-anchor="middle" stroke="none">00001</text>
+              <line x1="92" y1="210" x2="190" y2="210"/>
+              <line x1="25" y1="248" x2="80" y2="248"/><line x1="80" y1="236" x2="80" y2="260"/><line x1="92" y1="236" x2="92" y2="260"/><text x="86" y="231" text-anchor="middle" stroke="none">01002</text>
+              <line x1="92" y1="248" x2="145" y2="248"/>
+              <line x1="25" y1="286" x2="80" y2="286"/><line x1="80" y1="274" x2="80" y2="298"/><line x1="92" y1="274" x2="92" y2="298"/><text x="86" y="269" text-anchor="middle" stroke="none">01201</text>
+              <line x1="92" y1="286" x2="145" y2="286"/><line x1="145" y1="210" x2="145" y2="286"/>
+              <line x1="190" y1="198" x2="190" y2="222"/><line x1="202" y1="198" x2="202" y2="222"/><line x1="186" y1="220" x2="206" y2="200"/><text x="196" y="193" text-anchor="middle" stroke="none">00000</text>
+              <line x1="202" y1="210" x2="295" y2="210"/>
+              <line x1="295" y1="198" x2="295" y2="222"/><line x1="307" y1="198" x2="307" y2="222"/><line x1="291" y1="220" x2="311" y2="200"/><text x="301" y="193" text-anchor="middle" stroke="none">00004</text>
+              <line x1="307" y1="210" x2="425" y2="210"/>
+              <path d="M432,200 A12,12 0 0,0 432,220" fill="none"/><path d="M448,200 A12,12 0 0,1 448,220" fill="none"/><text x="460" y="214" stroke="none">01002 (K3)</text>
+
+              <!-- Rung 4: (00002 OR 01003) AND NOT 00004 -> 01003 -->
+              <line x1="25" y1="330" x2="80" y2="330"/><line x1="80" y1="318" x2="80" y2="342"/><line x1="92" y1="318" x2="92" y2="342"/><text x="86" y="313" text-anchor="middle" stroke="none">00002</text>
+              <line x1="92" y1="330" x2="190" y2="330"/>
+              <line x1="25" y1="368" x2="80" y2="368"/><line x1="80" y1="356" x2="80" y2="380"/><line x1="92" y1="356" x2="92" y2="380"/><text x="86" y="351" text-anchor="middle" stroke="none">01003</text>
+              <line x1="92" y1="368" x2="145" y2="368"/><line x1="145" y1="330" x2="145" y2="368"/>
+              <line x1="190" y1="318" x2="190" y2="342"/><line x1="202" y1="318" x2="202" y2="342"/><line x1="186" y1="340" x2="206" y2="320"/><text x="196" y="313" text-anchor="middle" stroke="none">00004</text>
+              <line x1="202" y1="330" x2="425" y2="330"/>
+              <path d="M432,320 A12,12 0 0,0 432,340" fill="none"/><path d="M448,320 A12,12 0 0,1 448,340" fill="none"/><text x="460" y="334" stroke="none">01003 (K4)</text>
+
+              <!-- Rung 5: 01003 AND NOT 00003 AND NOT 01000 -> 01200 -->
+              <line x1="25" y1="406" x2="80" y2="406"/><line x1="80" y1="394" x2="80" y2="418"/><line x1="92" y1="394" x2="92" y2="418"/><text x="86" y="389" text-anchor="middle" stroke="none">01003</text>
+              <line x1="92" y1="406" x2="190" y2="406"/>
+              <line x1="190" y1="394" x2="190" y2="418"/><line x1="202" y1="394" x2="202" y2="418"/><line x1="186" y1="416" x2="206" y2="396"/><text x="196" y="389" text-anchor="middle" stroke="none">00003</text>
+              <line x1="202" y1="406" x2="295" y2="406"/>
+              <line x1="295" y1="394" x2="295" y2="418"/><line x1="307" y1="394" x2="307" y2="418"/><line x1="291" y1="416" x2="311" y2="396"/><text x="301" y="389" text-anchor="middle" stroke="none">01000</text>
+              <line x1="307" y1="406" x2="425" y2="406"/>
+              <path d="M432,396 A12,12 0 0,0 432,416" fill="none"/><path d="M448,396 A12,12 0 0,1 448,416" fill="none"/><text x="460" y="410" stroke="none">01200</text>
+
+              <!-- Rung 6: (00003 OR 01002) AND NOT 00002 -> 01201 -->
+              <line x1="25" y1="444" x2="80" y2="444"/><line x1="80" y1="432" x2="80" y2="456"/><line x1="92" y1="432" x2="92" y2="456"/><text x="86" y="427" text-anchor="middle" stroke="none">00003</text>
+              <line x1="92" y1="444" x2="190" y2="444"/>
+              <line x1="25" y1="480" x2="80" y2="480"/><line x1="80" y1="468" x2="80" y2="492"/><line x1="92" y1="468" x2="92" y2="492"/><text x="86" y="463" text-anchor="middle" stroke="none">01002</text>
+              <line x1="92" y1="480" x2="145" y2="480"/><line x1="145" y1="444" x2="145" y2="480"/>
+              <line x1="190" y1="432" x2="190" y2="456"/><line x1="202" y1="432" x2="202" y2="456"/><line x1="186" y1="454" x2="206" y2="434"/><text x="196" y="427" text-anchor="middle" stroke="none">00002</text>
+              <line x1="202" y1="444" x2="425" y2="444"/>
+              <path d="M432,434 A12,12 0 0,0 432,454" fill="none"/><path d="M448,434 A12,12 0 0,1 448,454" fill="none"/><text x="460" y="448" stroke="none">01201</text>
+            </svg>
+          </div>
+        </div>`;
+      }
+
       function openPresetWiringGuide(preset) {
         const guides = {
           FWD_REV: {
@@ -6736,6 +7390,20 @@ END`,
             ],
             note: "Preset Jogging menampilkan K1 dan K2, tetapi wiring daya motor balik memerlukan pembalikan dua fasa dan interlock yang benar. Ikuti label terminal serta logika yang sedang aktif.",
           },
+          STAR_DELTA_REV: {
+            title:
+              "📕 Jobsheet — Motor 3-Fasa Sistem Bintang–Segitiga Manual 2 Arah Putar",
+            intro:
+              "MENJALANKAN MOTOR LISTRIK 3 PHASA SISTIM BINTANG – SEGITIGA SECARA MANUAL DENGAN 2 ARAH PUTAR. Rangkaian menggunakan 5 tombol tekan (ON-1, ON-2, ON-3, ON-4, OFF) dan 4 kontaktor: K1 (Utama Kanan), K2 (Hubung Bintang / Y), K3 (Hubung Segitiga / Δ), serta K4 (Utama Kiri).",
+            steps: [
+              "Catu Daya & Input PLC: Sambungkan PSU +V ke COM Input PLC, dan -V ke seluruh terminal T2 tombol tekan (PB0 s.d PB4). Hubungkan PB0 (ON-1) ke Input 00 (00000), PB1 (ON-2) ke Input 01 (00001), PB2 (ON-3) ke Input 02 (00002), PB3 (ON-4) ke Input 03 (00003), dan PB4 (OFF) ke Input 04 (00004).",
+              "Output PLC ke Koil Kontaktor: Jumper fasa MCB_OUT ke COM0–COM3. Hubungkan Output 00 (01000) melalui TOR1 95-96 ke koil K1 (A1), Output 01 (01001) ke koil K2 Bintang (A1), Output 02 (01002) ke koil K3 Segitiga (A1), dan Output 03 (01003) ke koil K4 Putar Kiri (A1).",
+              "Indikator Lampu: Hubungkan Output 04 (01004) ke Lampu Merah (Motor Off), paralel koil K2 (01001) ke Lampu Hijau (Bintang / Y), dan paralel koil K3 (01002) ke Lampu Kuning (Segitiga / Δ). Seluruh terminal A2 kontaktor dan N lampu kembali ke Netral.",
+              "Daya 3-Fasa Utama & Pembalik Fasa (K1 & K4): Dari MCB 3-Fasa (L1/L2/L3) masuk ke K1 (L1/L2/L3) dan dijumper ke K4 (L1/L2/L3). Output K1 (T1/T2/T3) masuk ke TOR1 (T1/T2/T3) secara berurutan, sedangkan output K4 ditukar dua fasanya (K4_T1→TOR1_T3, K4_T2→TOR1_T2, K4_T3→TOR1_T1) untuk membalik arah putaran motor.",
+              "Daya Hubung Bintang (K2) & Segitiga (K3): Keluaran TOR1 (U/V/W) menuju terminal awal kumparan motor M1 (U1/V1/W1) dan dicabang ke input K3 Segitiga (L1/L2/L3). Ujung kumparan motor M1 (U2/V2/W2) dihubungkan ke output K3 (T1/T2/T3) dan K2 (T1/T2/T3), sedangkan sisi atas K2 (L1-L2-L3) dijumper menjadi titik bintang (Y).",
+            ],
+            note: "Untuk berpindah dari Bintang (Y) ke Segitiga (Δ): tekan ON-1 dahulu (K1+K2 aktif = Bintang Kanan), lalu tekan ON-2 (K2 lepas, K1+K3 aktif = Segitiga Kanan). Tekan OFF untuk berhenti. Untuk arah kiri: tekan ON-3 (K4+K2 aktif = Bintang Kiri), lalu tekan ON-4 (K2 lepas, K4+K3 aktif = Segitiga Kiri).",
+          },
         };
         const family = preset.replace(/_(CONTROL|MOTOR)$/, "");
         const mode = preset.endsWith("_CONTROL")
@@ -6757,19 +7425,23 @@ END`,
             ? "Forward-Reverse"
             : family === "DOL"
               ? "DOL Start-Stop"
-              : "Inching / Jogging";
+              : family === "STAR_DELTA_REV"
+                ? "Bintang–Segitiga 2 Arah Putar"
+                : "Inching / Jogging";
         const title = "📘 Panduan Wiring — " + familyName + " — " + mode;
         document.getElementById("guide-modal-title").textContent = title;
         const allSteps = preset.endsWith("_CONTROL")
           ? g.steps
               .filter(
                 (x) =>
-                  !/Daya motor|Daya utama|Daya:|motor M1|motor M2|tiga fasa menuju kontaktor/i.test(
+                  !/Daya motor|Daya utama|Daya:|Daya 3-Fasa|Daya Hubung|motor M1|motor M2|tiga fasa menuju kontaktor/i.test(
                     x,
                   ),
               )
               .concat(modeSteps)
           : g.steps.concat(modeSteps);
+        const extraJobsheetHtml =
+          family === "STAR_DELTA_REV" ? buildStarDeltaLadderSvg() : "";
         const html =
           '<div class="guide-section"><p style="font-size:11px;line-height:1.6">' +
           g.intro +
@@ -6779,7 +7451,8 @@ END`,
             .join("") +
           '</ol><p style="font-size:10px;line-height:1.6;margin-top:10px;color:var(--accent-amber)"><b>Catatan:</b> ' +
           g.note +
-          "</p></div>";
+          "</p></div>" +
+          extraJobsheetHtml;
         document.getElementById("preset-wiring-guide-content").innerHTML = html;
         document.getElementById("guide-modal").style.display = "flex";
       }
@@ -6808,87 +7481,119 @@ END`,
         evaluateCircuit();
       }
 
-      /* INTERPRETER MNEMONIC */
-      function getBitValue(addr) {
-        if (!addr) return false;
-        addr = addr.trim().toUpperCase();
-        if (addr.startsWith("W") || addr.startsWith("10."))
-          return !!plcMemory.workBits[addr];
-        if (addr.startsWith("100.")) return !!plcMemory.outputs[addr];
+      /* INTERPRETER MNEMONIC (MENDUKUNG FORMAT 0.00/100.00 MAUPUN 5-DIGIT OMRON 00000/01000/01200) */
+      function normalizePlcAddress(rawAddr) {
+        if (!rawAddr) return { type: "none", key: "" };
+        let addr = rawAddr.trim().toUpperCase();
+        // Format 5-digit Omron: 00000..00015 (Input), 01000..01007 (Output), 01200..01215 (Work/IR)
+        if (/^000\d{2}$/.test(addr)) {
+          return { type: "input", key: "0." + addr.slice(3) };
+        }
+        if (/^010\d{2}$/.test(addr) || /^100\d{2}$/.test(addr)) {
+          return { type: "output", key: "100." + addr.slice(3) };
+        }
+        if (/^012\d{2}$/.test(addr)) {
+          return { type: "work", key: "12." + addr.slice(3) };
+        }
+        if (
+          addr.startsWith("W") ||
+          addr.startsWith("10.") ||
+          addr.startsWith("12.")
+        ) {
+          return { type: "work", key: addr };
+        }
+        if (addr.startsWith("100.")) {
+          return { type: "output", key: addr };
+        }
+        if (addr.startsWith("1.")) {
+          return { type: "output", key: "100." + addr.slice(2) };
+        }
         if (!addr.includes(".")) {
           let num = parseInt(addr, 10);
-          addr = "0." + (num < 10 ? "0" + num : num);
+          return {
+            type: "input",
+            key: "0." + (num < 10 ? "0" + num : num),
+          };
         }
-        return !!plcMemory.inputs[addr];
+        return { type: "input", key: addr };
+      }
+
+      function getBitValue(addr) {
+        const norm = normalizePlcAddress(addr);
+        if (norm.type === "work") return !!plcMemory.workBits[norm.key];
+        if (norm.type === "output") return !!plcMemory.outputs[norm.key];
+        if (norm.type === "input") return !!plcMemory.inputs[norm.key];
+        return false;
       }
 
       function setBitValue(addr, val) {
-        if (!addr) return;
-        addr = addr.trim().toUpperCase();
-        if (addr.startsWith("W") || addr.startsWith("10."))
-          plcMemory.workBits[addr] = val;
-        else if (addr.startsWith("100.")) plcMemory.outputs[addr] = val;
+        const norm = normalizePlcAddress(addr);
+        if (norm.type === "work") plcMemory.workBits[norm.key] = val;
+        else if (norm.type === "output") plcMemory.outputs[norm.key] = val;
       }
 
       function executeMnemonicInterpreter() {
         const lines = activeMnemonicCode.split("\n");
-        let accumulator = false;
+        // Jalankan 3 siklus scan beruntun agar internal relay pada rung bawah (seperti 01200/01201)
+        // langsung memperbarui rung di atasnya pada siklus penekanan tombol yang sama.
+        for (let scanPass = 0; scanPass < 3; scanPass++) {
+          let accumulator = false;
+          lines.forEach((line) => {
+            let trimmed = line.trim();
+            if (!trimmed || trimmed.startsWith("//")) return;
 
-        lines.forEach((line) => {
-          let trimmed = line.trim();
-          if (!trimmed || trimmed.startsWith("//")) return;
+            let parts = trimmed.split(/\s+/);
+            let op = parts[0].toUpperCase();
+            let op2 = parts[1] ? parts[1].toUpperCase() : "";
 
-          let parts = trimmed.split(/\s+/);
-          let op = parts[0].toUpperCase();
-          let op2 = parts[1] ? parts[1].toUpperCase() : "";
+            let instruction = op;
+            let addr = op2;
 
-          let instruction = op;
-          let addr = op2;
+            if (
+              (op === "LD" || op === "AND" || op === "OR" || op === "OUT") &&
+              op2 === "NOT"
+            ) {
+              instruction = op + " NOT";
+              addr = parts[2] ? parts[2].toUpperCase() : "";
+            }
 
-          if (
-            (op === "LD" || op === "AND" || op === "OR" || op === "OUT") &&
-            op2 === "NOT"
-          ) {
-            instruction = op + " NOT";
-            addr = parts[2] ? parts[2].toUpperCase() : "";
-          }
+            if (instruction === "END") return;
+            let bitVal = getBitValue(addr);
 
-          if (instruction === "END") return;
-          let bitVal = getBitValue(addr);
-
-          switch (instruction) {
-            case "LD":
-              accumulator = bitVal;
-              break;
-            case "LD NOT":
-              accumulator = !bitVal;
-              break;
-            case "AND":
-              accumulator = accumulator && bitVal;
-              break;
-            case "AND NOT":
-              accumulator = accumulator && !bitVal;
-              break;
-            case "OR":
-              accumulator = accumulator || bitVal;
-              break;
-            case "OR NOT":
-              accumulator = accumulator || !bitVal;
-              break;
-            case "OUT":
-              setBitValue(addr, accumulator);
-              break;
-            case "OUT NOT":
-              setBitValue(addr, !accumulator);
-              break;
-            case "SET":
-              if (accumulator) setBitValue(addr, true);
-              break;
-            case "RST":
-              if (accumulator) setBitValue(addr, false);
-              break;
-          }
-        });
+            switch (instruction) {
+              case "LD":
+                accumulator = bitVal;
+                break;
+              case "LD NOT":
+                accumulator = !bitVal;
+                break;
+              case "AND":
+                accumulator = accumulator && bitVal;
+                break;
+              case "AND NOT":
+                accumulator = accumulator && !bitVal;
+                break;
+              case "OR":
+                accumulator = accumulator || bitVal;
+                break;
+              case "OR NOT":
+                accumulator = accumulator || !bitVal;
+                break;
+              case "OUT":
+                setBitValue(addr, accumulator);
+                break;
+              case "OUT NOT":
+                setBitValue(addr, !accumulator);
+                break;
+              case "SET":
+                if (accumulator) setBitValue(addr, true);
+                break;
+              case "RST":
+                if (accumulator) setBitValue(addr, false);
+                break;
+            }
+          });
+        }
       }
 
       // Tiap preset tersedia dalam dua mode: kontrol saja atau kontrol beserta rangkaian motor.
@@ -6898,6 +7603,8 @@ END`,
       PRESET_PROGRAMS.DOL_MOTOR = PRESET_PROGRAMS.DOL;
       PRESET_PROGRAMS.JOGGING_CONTROL = PRESET_PROGRAMS.JOGGING;
       PRESET_PROGRAMS.JOGGING_MOTOR = PRESET_PROGRAMS.JOGGING;
+      PRESET_PROGRAMS.STAR_DELTA_REV_CONTROL = PRESET_PROGRAMS.STAR_DELTA_REV;
+      PRESET_PROGRAMS.STAR_DELTA_REV_MOTOR = PRESET_PROGRAMS.STAR_DELTA_REV;
 
       const PRESET_COMPONENTS = {
         FWD_REV_CONTROL: [
@@ -6941,12 +7648,33 @@ END`,
           "tor-1",
           "motor-m1",
         ],
+        STAR_DELTA_REV_CONTROL: [
+          "buttons-panel",
+          "lamp-panel",
+          "contactor-k1",
+          "contactor-k2",
+          "contactor-k3",
+          "contactor-k4",
+          "tor-1",
+        ],
+        STAR_DELTA_REV_MOTOR: [
+          "buttons-panel",
+          "lamp-panel",
+          "contactor-k1",
+          "contactor-k2",
+          "contactor-k3",
+          "contactor-k4",
+          "tor-1",
+          "motor-m1",
+        ],
       };
       const OPTIONAL_COMPONENTS = [
         "buttons-panel",
         "lamp-panel",
         "contactor-k1",
         "contactor-k2",
+        "contactor-k3",
+        "contactor-k4",
         "tor-1",
         "tor-2",
         "motor-m1",
@@ -7003,12 +7731,93 @@ END`,
         window.activePresetMode = val.endsWith("_CONTROL")
           ? "CONTROL"
           : "MOTOR";
+        const isStarDeltaRev = window.activePresetFamily === "STAR_DELTA_REV";
+        const buttonsPanel = document.getElementById("buttons-panel");
+        const lampPanel = document.getElementById("lamp-panel");
+        const motorM1 = document.getElementById("motor-m1");
+        const motorM1Header = document.getElementById("motor-m1-header");
+        const k1Header = document.querySelector("#contactor-k1 .comp-header");
+        const k2Header = document.querySelector("#contactor-k2 .comp-header");
+
+        if (buttonsPanel)
+          buttonsPanel.classList.toggle("sd-five-buttons", isStarDeltaRev);
+        if (lampPanel)
+          lampPanel.classList.toggle("sd-lamp-shift", isStarDeltaRev);
+        if (motorM1) {
+          const hadSdPos = motorM1.classList.contains("sd-motor-pos");
+          if (hadSdPos !== isStarDeltaRev) {
+            motorM1.style.left = "";
+            motorM1.style.top = "";
+          }
+          motorM1.classList.toggle("sd-motor-pos", isStarDeltaRev);
+        }
+        if (motorM1Header) {
+          motorM1Header.textContent = isStarDeltaRev
+            ? "MOTOR 3-FASA M1 (Y-Δ 2 ARAH)"
+            : "MOTOR 3-FASA M1 (FORWARD)";
+        }
+        if (k1Header) {
+          k1Header.textContent = isStarDeltaRev
+            ? "KONTAKTOR K1 · SN-21 (KANAN)"
+            : "KONTAKTOR K1 · SN-21";
+        }
+        if (k2Header) {
+          k2Header.textContent = isStarDeltaRev
+            ? "KONTAKTOR K2 · SN-21 (Y)"
+            : "KONTAKTOR K2 · SN-21";
+        }
+
+        const pb0Btn = document.getElementById("pb-stop");
+        const pb1Btn = document.getElementById("pb-fwd");
+        const pb2Btn = document.getElementById("pb-rev");
+        const pb0Lbl = document.getElementById("pb0-label");
+        const pb1Lbl = document.getElementById("pb1-label");
+        const pb2Lbl = document.getElementById("pb2-label");
+
+        if (isStarDeltaRev) {
+          if (pb0Btn) pb0Btn.className = "push-btn btn-green";
+          if (pb1Btn) pb1Btn.className = "push-btn btn-blue";
+          if (pb2Btn) pb2Btn.className = "push-btn btn-yellow";
+          if (pb0Lbl) {
+            pb0Lbl.textContent = "ON-1 Y-KN (00)";
+            pb0Lbl.style.color = "#2ecc71";
+          }
+          if (pb1Lbl) {
+            pb1Lbl.textContent = "ON-2 Δ-KN (01)";
+            pb1Lbl.style.color = "#38bdf8";
+          }
+          if (pb2Lbl) {
+            pb2Lbl.textContent = "ON-3 Y-KR (02)";
+            pb2Lbl.style.color = "#f1c40f";
+          }
+        } else {
+          if (pb0Btn) pb0Btn.className = "push-btn btn-red";
+          if (pb1Btn) pb1Btn.className = "push-btn btn-green";
+          if (pb2Btn) pb2Btn.className = "push-btn btn-yellow";
+          if (pb0Lbl) {
+            pb0Lbl.textContent = "STOP (00)";
+            pb0Lbl.style.color = "#e74c3c";
+          }
+          if (pb1Lbl) {
+            pb1Lbl.textContent = "START FWD (01)";
+            pb1Lbl.style.color = "#2ecc71";
+          }
+          if (pb2Lbl) {
+            pb2Lbl.textContent = "START REV (02)";
+            pb2Lbl.style.color = "#f1c40f";
+          }
+        }
+
         const lampLabels = document.querySelectorAll("#lamp-panel span");
         if (lampLabels.length >= 3) {
           if (window.activePresetFamily === "FWD_REV") {
             lampLabels[0].textContent = "L MERAH (100.04)";
             lampLabels[1].textContent = "L HIJAU (100.05)";
             lampLabels[2].textContent = "L KUNING (100.06)";
+          } else if (isStarDeltaRev) {
+            lampLabels[0].textContent = "MOTOR OFF (100.04)";
+            lampLabels[1].textContent = "BINTANG Y (100.01)";
+            lampLabels[2].textContent = "SEGITIGA Δ (100.02)";
           } else {
             lampLabels[0].textContent = "STANDBY (100.00)";
             lampLabels[1].textContent = "RUN FWD (100.01)";
@@ -7069,6 +7878,7 @@ END`,
           return pairs;
         };
 
+        const isStarDeltaPreset = preset.startsWith("STAR_DELTA_REV");
         const common = [
           // Fasa kontrol: PLN_L1 -> MCB_IN, lalu MCB_OUT -> PSU_AC_L -> PLC_L1 (dijumper agar MCB_OUT tidak menumpuk >2 kabel)
           ["PLN_L1", "MCB_IN"],
@@ -7078,10 +7888,20 @@ END`,
           ...chainVisible(["MCBN_OUT", "PSU_AC_N", "PLC_L2N"]),
           // COM Input mendapat +V dari PSU; minus (-V) PSU masuk ke Push Button dan dijumper berantai
           ["PSU_+V", "PLC_IN_COM"],
-          ...chainVisible(["PSU_-V", "PB0_T2", "PB1_T2", "PB2_T2"]),
+          ...chainVisible(
+            isStarDeltaPreset
+              ? ["PSU_-V", "PB0_T2", "PB1_T2", "PB2_T2", "PB3_T2", "PB4_T2"]
+              : ["PSU_-V", "PB0_T2", "PB1_T2", "PB2_T2"],
+          ),
           ["PB0_T1", "PLC_IN_00"],
           ["PB1_T1", "PLC_IN_01"],
           ["PB2_T1", "PLC_IN_02"],
+          ...(isStarDeltaPreset
+            ? [
+                ["PB3_T1", "PLC_IN_03"],
+                ["PB4_T1", "PLC_IN_04"],
+              ]
+            : []),
           // COM Output PLC dijumper berantai dari COM0 -> COM1 -> COM2 -> COM3
           ...chainVisible([
             "MCB_OUT",
@@ -7118,6 +7938,29 @@ END`,
           ["TOR2_V", "M2_V"],
           ["TOR2_W", "M2_W"],
         ];
+        const motorStarDeltaRev = [
+          ...motorForward,
+          // Suplai 3-fasa ke K4 (Utama Putar Kiri) dijumper dari L1/L2/L3 K1, keluar dengan fasa R-T ditukar menuju TOR1
+          ["K1_L1", "K4_L1"],
+          ["K1_L2", "K4_L2"],
+          ["K1_L3", "K4_L3"],
+          ["K4_T1", "TOR1_T3"],
+          ["K4_T2", "TOR1_T2"],
+          ["K4_T3", "TOR1_T1"],
+          // Cabang fasa dari TOR1 menuju input K3 (Segitiga / Delta Δ) lalu ke ujung belitan U2, V2, W2
+          ["TOR1_U", "K3_L1"],
+          ["TOR1_V", "K3_L2"],
+          ["TOR1_W", "K3_L3"],
+          ["K3_T1", "M1_U2"],
+          ["K3_T2", "M1_V2"],
+          ["K3_T3", "M1_W2"],
+          // K2 (Bintang / Star Y): T1/T2/T3 terhubung ke jalur U2/V2/W2, sedangkan L1-L2-L3 dikopel menjadi titik bintang
+          ["K2_T1", "K3_T1"],
+          ["K2_T2", "K3_T2"],
+          ["K2_T3", "K3_T3"],
+          ["K2_L1", "K2_L2"],
+          ["K2_L2", "K2_L3"],
+        ];
 
         let connections = [...common];
         if (preset.startsWith("FWD_REV")) {
@@ -7141,6 +7984,29 @@ END`,
           );
           if (preset.endsWith("_MOTOR"))
             connections.push(...motorForward, ...motorReverse);
+        } else if (preset.startsWith("STAR_DELTA_REV")) {
+          connections.push(
+            ["PLC_OUT_00", "TOR1_95"],
+            ["TOR1_96", "K1_A1"],
+            ["PLC_OUT_01", "K2_A1"],
+            ["PLC_OUT_02", "K3_A1"],
+            ["PLC_OUT_03", "K4_A1"],
+            ["PLC_OUT_04", "LP_SBY_L"],
+            ["K2_A1", "LP_FWD_L"],
+            ["K3_A1", "LP_REV_L"],
+            ...chainVisible([
+              "MCBN_OUT",
+              "K1_A2",
+              "K2_A2",
+              "K3_A2",
+              "K4_A2",
+              "LP_SBY_N",
+              "LP_FWD_N",
+              "LP_REV_N",
+            ]),
+          );
+          if (preset.endsWith("_MOTOR"))
+            connections.push(...motorStarDeltaRev);
         } else if (preset.startsWith("DOL")) {
           connections.push(
             ["PLC_OUT_01", "TOR1_95"],
@@ -7902,14 +8768,14 @@ END`,
         // Jalur netral AC, minus PSU (-V), jumper minus Push Button (PBx_T2), dan jumper netral Lampu (LP_*_N) berwarna biru
         if (
           ids.some((id) =>
-            /NEUTRAL|MCBN_|AC_N|PLC_L2N|PSU_-V|PB[012]_T2|LP_.*_N|K[12]_A2/.test(
+            /NEUTRAL|MCBN_|AC_N|PLC_L2N|PSU_-V|PB[0-4]_T2|LP_.*_N|K[1-4]_A2/.test(
               id,
             ),
           )
         )
           return "#2980b9";
         const motorPower = ids.some((id) =>
-          /^(K[12]_(L[123]|T[123])|TOR[12]_(T[123]|U|V|W)|M[12]_[UVW])$/.test(
+          /^(K[1-4]_(L[123]|T[123])|TOR[12]_(T[123]|U|V|W)|M[12]_[UVW]2?)$/.test(
             id,
           ),
         );
@@ -7979,12 +8845,12 @@ END`,
             const ids = `${w.from}|${w.to}`;
             if (/PLN_|PSU_|MCB_/.test(ids)) return 0;
             if (
-              /K[12]_(L[123]|T[123])|TOR[12]_(T[123]|U|V|W)|M[12]_[UVW]/.test(
+              /K[1-4]_(L[123]|T[123])|TOR[12]_(T[123]|U|V|W)|M[12]_[UVW]2?/.test(
                 ids,
               )
             )
               return 1;
-            if (/K[12]_|TOR[12]_|PLC_OUT/.test(ids)) return 2;
+            if (/K[1-4]_|TOR[12]_|PLC_OUT/.test(ids)) return 2;
             return 3;
           };
           return score(a) - score(b);
@@ -8519,7 +9385,7 @@ END`,
         );
         const newY = Math.max(
           10,
-          Math.min(870, (e.clientY - stageRect.top) / scale),
+          Math.min(1100, (e.clientY - stageRect.top) / scale),
         );
 
         const wire = wires.find((w) => w.id === draggingHandle.wireId);
@@ -8641,14 +9507,27 @@ END`,
 
       function bindButton(elemId, code) {
         const btn = document.getElementById(elemId);
+        if (!btn) return;
         btn.addEventListener("mousedown", () => setButtonState(code, true));
         btn.addEventListener("mouseup", () => setButtonState(code, false));
         btn.addEventListener("mouseleave", () => setButtonState(code, false));
+        btn.addEventListener(
+          "touchstart",
+          (e) => {
+            e.preventDefault();
+            setButtonState(code, true);
+          },
+          { passive: false },
+        );
+        btn.addEventListener("touchend", () => setButtonState(code, false));
+        btn.addEventListener("touchcancel", () => setButtonState(code, false));
       }
 
       bindButton("pb-stop", "00");
       bindButton("pb-fwd", "01");
       bindButton("pb-rev", "02");
+      bindButton("pb-on4", "03");
+      bindButton("pb-off", "04");
 
       /* EVALUATOR GRAPH KONTINUITAS KELISTRIKAN */
       function areNodesConnected(startNode, targetNode, visited = new Set()) {
@@ -8732,6 +9611,30 @@ END`,
           !visited.has("PB2_T1")
         )
           directNeighbors.push("PB2_T1");
+        if (
+          startNode === "PB3_T1" &&
+          buttonStates["03"] &&
+          !visited.has("PB3_T2")
+        )
+          directNeighbors.push("PB3_T2");
+        if (
+          startNode === "PB3_T2" &&
+          buttonStates["03"] &&
+          !visited.has("PB3_T1")
+        )
+          directNeighbors.push("PB3_T1");
+        if (
+          startNode === "PB4_T1" &&
+          buttonStates["04"] &&
+          !visited.has("PB4_T2")
+        )
+          directNeighbors.push("PB4_T2");
+        if (
+          startNode === "PB4_T2" &&
+          buttonStates["04"] &&
+          !visited.has("PB4_T1")
+        )
+          directNeighbors.push("PB4_T1");
 
         // TOR NC Contacts (95-96)
         if (!isTor1Tripped) {
@@ -8883,17 +9786,24 @@ END`,
         }
 
         const isForwardReverse = window.activePresetFamily === "FWD_REV";
+        const isStarDeltaRev = window.activePresetFamily === "STAR_DELTA_REV";
         const lampConfig = isForwardReverse
           ? [
               ["100.04", "PLC_OUT_04", "PLC_OUT_COM2"],
               ["100.05", "PLC_OUT_05", "PLC_OUT_COM3"],
               ["100.06", "PLC_OUT_06", "PLC_OUT_COM3"],
             ]
-          : [
-              ["100.00", "PLC_OUT_00", "PLC_OUT_COM0"],
-              ["100.01", "PLC_OUT_01", "PLC_OUT_COM1"],
-              ["100.02", "PLC_OUT_02", "PLC_OUT_COM2"],
-            ];
+          : isStarDeltaRev
+            ? [
+                ["100.04", "PLC_OUT_04", "PLC_OUT_COM2"],
+                ["100.01", "PLC_OUT_01", "PLC_OUT_COM1"],
+                ["100.02", "PLC_OUT_02", "PLC_OUT_COM2"],
+              ]
+            : [
+                ["100.00", "PLC_OUT_00", "PLC_OUT_COM0"],
+                ["100.01", "PLC_OUT_01", "PLC_OUT_COM1"],
+                ["100.02", "PLC_OUT_02", "PLC_OUT_COM2"],
+              ];
         const isStandbyLit =
           !!plcMemory.outputs[lampConfig[0][0]] &&
           checkOutputActive(
@@ -8926,13 +9836,29 @@ END`,
         document.getElementById("lamp-rev").className =
           "pilot-lamp lamp-yellow" + (isRevLit ? " lit" : "");
 
-        // EVALUASI KONTAKTOR K1 & K2 (COIL A1-A2 & PLUNGER)
-        const k1Output = isForwardReverse ? "100.02" : "100.01";
-        const k1Terminal = isForwardReverse ? "PLC_OUT_02" : "PLC_OUT_01";
-        const k1Com = isForwardReverse ? "PLC_OUT_COM1" : "PLC_OUT_COM1";
-        const k2Output = isForwardReverse ? "100.03" : "100.02";
-        const k2Terminal = isForwardReverse ? "PLC_OUT_03" : "PLC_OUT_02";
-        const k2Com = isForwardReverse ? "PLC_OUT_COM2" : "PLC_OUT_COM2";
+        // EVALUASI KONTAKTOR K1, K2, K3, K4 (COIL A1-A2 & PLUNGER)
+        const k1Output = isForwardReverse
+          ? "100.02"
+          : isStarDeltaRev
+            ? "100.00"
+            : "100.01";
+        const k1Terminal = isForwardReverse
+          ? "PLC_OUT_02"
+          : isStarDeltaRev
+            ? "PLC_OUT_00"
+            : "PLC_OUT_01";
+        const k1Com = isStarDeltaRev ? "PLC_OUT_COM0" : "PLC_OUT_COM1";
+        const k2Output = isForwardReverse
+          ? "100.03"
+          : isStarDeltaRev
+            ? "100.01"
+            : "100.02";
+        const k2Terminal = isForwardReverse
+          ? "PLC_OUT_03"
+          : isStarDeltaRev
+            ? "PLC_OUT_01"
+            : "PLC_OUT_02";
+        const k2Com = isStarDeltaRev ? "PLC_OUT_COM1" : "PLC_OUT_COM2";
         const k1CoilPowered =
           (isPhaseLine("K1_A1") && areNodesConnected("K1_A2", "PLN_NEUTRAL")) ||
           (areNodesConnected("K1_A1", k1Terminal) &&
@@ -8947,12 +9873,36 @@ END`,
             isPhaseLine(k2Com) &&
             areNodesConnected("K2_A2", "PLN_NEUTRAL"));
 
+        const k3CoilPowered =
+          isStarDeltaRev &&
+          ((isPhaseLine("K3_A1") &&
+            areNodesConnected("K3_A2", "PLN_NEUTRAL")) ||
+            (areNodesConnected("K3_A1", "PLC_OUT_02") &&
+              plcMemory.outputs["100.02"] &&
+              isPhaseLine("PLC_OUT_COM2") &&
+              areNodesConnected("K3_A2", "PLN_NEUTRAL")));
+
+        const k4CoilPowered =
+          isStarDeltaRev &&
+          ((isPhaseLine("K4_A1") &&
+            areNodesConnected("K4_A2", "PLN_NEUTRAL")) ||
+            (areNodesConnected("K4_A1", "PLC_OUT_03") &&
+              plcMemory.outputs["100.03"] &&
+              isPhaseLine("PLC_OUT_COM2") &&
+              areNodesConnected("K4_A2", "PLN_NEUTRAL")));
+
         document
           .getElementById("plunger-k1")
-          .classList.toggle("engaged", k1CoilPowered);
+          ?.classList.toggle("engaged", k1CoilPowered);
         document
           .getElementById("plunger-k2")
-          .classList.toggle("engaged", k2CoilPowered);
+          ?.classList.toggle("engaged", k2CoilPowered);
+        document
+          .getElementById("plunger-k3")
+          ?.classList.toggle("engaged", k3CoilPowered);
+        document
+          .getElementById("plunger-k4")
+          ?.classList.toggle("engaged", k4CoilPowered);
 
         // EVALUASI DAYA KONTAKTOR DARI L1,L2,L3 -> T1,T2,T3
         if (k1CoilPowered) {
@@ -8965,26 +9915,58 @@ END`,
         }
 
         // EVALUASI MOTOR 3-FASA M1 & M2 (U, V, W)
-        const m1HasPower =
-          (k1CoilPowered || isFwdLit) &&
-          !isTor1Tripped &&
-          (areNodesConnected("M1_U", "TOR1_U") ||
-            areNodesConnected("M1_U", "PLN_L1")) &&
-          (areNodesConnected("M1_V", "TOR1_V") ||
-            areNodesConnected("M1_V", "PLN_L2"));
+        const sdBadge = document.getElementById("m1-sd-badge");
+        if (isStarDeltaRev) {
+          const hasMainPower =
+            !isTor1Tripped &&
+            (areNodesConnected("M1_U", "TOR1_U") ||
+              areNodesConnected("M1_U", "PLN_L1")) &&
+            (areNodesConnected("M1_V", "TOR1_V") ||
+              areNodesConnected("M1_V", "PLN_L2"));
+          const dirRight = k1CoilPowered && !k4CoilPowered && hasMainPower;
+          const dirLeft = k4CoilPowered && !k1CoilPowered && hasMainPower;
+          const modeStar = k2CoilPowered && !k3CoilPowered;
+          const modeDelta = k3CoilPowered && !k2CoilPowered;
+          let rotorClass = "motor-rotor";
+          let badgeText = "STOP · MOTOR OFF";
+          if (dirRight && modeStar) {
+            rotorClass = "motor-rotor spinning-cw-star";
+            badgeText = "★ BINTANG (Y) · PUTAR KANAN";
+          } else if (dirRight && modeDelta) {
+            rotorClass = "motor-rotor spinning-cw";
+            badgeText = "▲ SEGITIGA (Δ) · PUTAR KANAN";
+          } else if (dirLeft && modeStar) {
+            rotorClass = "motor-rotor spinning-ccw-star";
+            badgeText = "★ BINTANG (Y) · PUTAR KIRI";
+          } else if (dirLeft && modeDelta) {
+            rotorClass = "motor-rotor spinning-ccw";
+            badgeText = "▲ SEGITIGA (Δ) · PUTAR KIRI";
+          }
+          document.getElementById("rotor-m1").className = rotorClass;
+          document.getElementById("rotor-m2").className = "motor-rotor";
+          if (sdBadge) sdBadge.textContent = badgeText;
+        } else {
+          const m1HasPower =
+            (k1CoilPowered || isFwdLit) &&
+            !isTor1Tripped &&
+            (areNodesConnected("M1_U", "TOR1_U") ||
+              areNodesConnected("M1_U", "PLN_L1")) &&
+            (areNodesConnected("M1_V", "TOR1_V") ||
+              areNodesConnected("M1_V", "PLN_L2"));
 
-        const m2HasPower =
-          (k2CoilPowered || isRevLit) &&
-          !isTor2Tripped &&
-          (areNodesConnected("M2_U", "TOR2_U") ||
-            areNodesConnected("M2_U", "PLN_L1")) &&
-          (areNodesConnected("M2_V", "TOR2_V") ||
-            areNodesConnected("M2_V", "PLN_L2"));
+          const m2HasPower =
+            (k2CoilPowered || isRevLit) &&
+            !isTor2Tripped &&
+            (areNodesConnected("M2_U", "TOR2_U") ||
+              areNodesConnected("M2_U", "PLN_L1")) &&
+            (areNodesConnected("M2_V", "TOR2_V") ||
+              areNodesConnected("M2_V", "PLN_L2"));
 
-        document.getElementById("rotor-m1").className =
-          "motor-rotor" + (m1HasPower ? " spinning-cw" : "");
-        document.getElementById("rotor-m2").className =
-          "motor-rotor" + (m2HasPower ? " spinning-ccw" : "");
+          document.getElementById("rotor-m1").className =
+            "motor-rotor" + (m1HasPower ? " spinning-cw" : "");
+          document.getElementById("rotor-m2").className =
+            "motor-rotor" + (m2HasPower ? " spinning-ccw" : "");
+        }
 
         // LIVE TRACE
         wires.forEach((w) => {
@@ -9007,7 +9989,7 @@ END`,
           stat.textContent = "STATUS: MCB TRIP!";
           stat.style.color = "var(--accent-red)";
         } else {
-          stat.textContent = "STATUS: PROGRAM RUNNING";
+          stat.textContent = "PROGRAM RUNNING";
           stat.style.color = "var(--accent-green)";
         }
       }
@@ -9115,6 +10097,45 @@ END`,
             err: "Periksa jalur output K2 → TOR2 95-96 → koil A1, serta A2 kembali ke netral.",
             detail:
               "Interlock Forward/Reverse juga harus tersedia pada program.",
+          });
+        } else if (family === "STAR_DELTA_REV") {
+          checks.push({
+            name: "Push button ON-4 (00003) & OFF (00004)",
+            ok:
+              anyConnected([
+                ["PB3_T2", "PLC_IN_03"],
+                ["PB3_T1", "PLC_IN_03"],
+              ]) &&
+              anyConnected([
+                ["PB4_T2", "PLC_IN_04"],
+                ["PB4_T1", "PLC_IN_04"],
+              ]),
+            err: "Periksa jalur PB3 (ON-4) → IN 03 dan PB4 (OFF) → IN 04.",
+            detail:
+              "Bintang-Segitiga 2 Arah menggunakan 5 tombol input (00000 s/d 00004).",
+          });
+          checks.push({
+            name: "Koil Kontaktor K1 (Kanan) & K4 (Kiri)",
+            ok:
+              connected("PLC_OUT_00", "TOR1_95") &&
+              connected("TOR1_96", "K1_A1") &&
+              connected("K1_A2", "PSU_AC_N") &&
+              connected("PLC_OUT_03", "K4_A1") &&
+              connected("K4_A2", "PSU_AC_N"),
+            err: "Periksa OUT 00 → TOR1 95-96 → K1_A1 serta OUT 03 → K4_A1 dan netral A2.",
+            detail:
+              "K1 (01000) mengatur putar kanan dan K4 (01003) mengatur putar kiri.",
+          });
+          checks.push({
+            name: "Koil Kontaktor K2 (Bintang Y) & K3 (Segitiga Δ)",
+            ok:
+              connected("PLC_OUT_01", "K2_A1") &&
+              connected("K2_A2", "PSU_AC_N") &&
+              connected("PLC_OUT_02", "K3_A1") &&
+              connected("K3_A2", "PSU_AC_N"),
+            err: "Periksa OUT 01 → K2_A1 (Bintang) serta OUT 02 → K3_A1 (Segitiga) dan netral A2.",
+            detail:
+              "K2 (01001) menghubungkan titik bintang Y dan K3 (01002) menghubungkan segitiga Δ.",
           });
         } else {
           checks.push({
